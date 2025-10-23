@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Shall we play a game?</title>
+    <link rel="icon" href="/img/favicon.ico" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/img/apple-touch-icon.png" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/img/favicon-32x32.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="/img/favicon-16x16.png" />
+    <link rel="manifest" href="/site.webmanifest" />
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=VT323&display=swap");
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        background: #000;
+        overflow: hidden;
+        font-family: "VT323", monospace;
+        height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .crt {
+        position: relative;
+        width: 100vw;
+        height: 100vh;
+        background: radial-gradient(ellipse at center, #0a0a0a 0%, #000000 100%);
+        animation: flicker 0.15s infinite;
+      }
+
+      .crt::before {
+        content: " ";
+        display: block;
+        position: absolute;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        right: 0;
+        background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), linear-gradient(90deg, rgba(0, 0, 255, 0.06), rgba(0, 100, 255, 0.02), rgba(0, 150, 255, 0.06));
+        z-index: 2;
+        background-size: 100% 2px, 3px 100%;
+        pointer-events: none;
+        animation: scanlines 0.5s linear infinite;
+      }
+
+      .crt::after {
+        content: " ";
+        display: block;
+        position: absolute;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        right: 0;
+        background: rgba(18, 16, 16, 0.1);
+        opacity: 0;
+        z-index: 2;
+        pointer-events: none;
+        animation: flicker 0.15s infinite;
+      }
+
+      .screen {
+        width: 100%;
+        height: 100%;
+        position: relative;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+      }
+
+      .terminal {
+        position: relative;
+        z-index: 1;
+      }
+
+      h1 {
+        font-size: clamp(2rem, 6vw, 4rem);
+        color: #4d9eff;
+        text-shadow: 0 0 10px #4d9eff, 0 0 20px #4d9eff, 0 0 30px #4d9eff, 0 0 40px #0066ff, 0 0 70px #0066ff, 0 0 80px #0066ff, 0 0 100px #0066ff;
+        animation: textGlow 2s ease-in-out infinite alternate, glitch 3s infinite;
+        letter-spacing: 0.05em;
+        font-weight: 400;
+        position: relative;
+        text-transform: uppercase;
+        font-family: "VT323", monospace;
+        font-style: normal;
+        line-height: 1;
+        margin: 0;
+        padding: 0;
+      }
+
+      .cursor {
+        display: inline-block;
+        width: 0.6em;
+        height: 1em;
+        background: #4d9eff;
+        margin-left: 0.2em;
+        animation: blink 1s step-end infinite;
+        vertical-align: text-bottom;
+      }
+
+      .noise {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        pointer-events: none;
+        opacity: 0.05;
+        z-index: 3;
+        background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+        animation: noise 0.2s infinite;
+      }
+
+      @keyframes flicker {
+        0% {
+          opacity: 0.27861;
+        }
+        5% {
+          opacity: 0.34769;
+        }
+        10% {
+          opacity: 0.23604;
+        }
+        15% {
+          opacity: 0.90626;
+        }
+        20% {
+          opacity: 0.18128;
+        }
+        25% {
+          opacity: 0.83891;
+        }
+        30% {
+          opacity: 0.65583;
+        }
+        35% {
+          opacity: 0.67807;
+        }
+        40% {
+          opacity: 0.26559;
+        }
+        45% {
+          opacity: 0.84693;
+        }
+        50% {
+          opacity: 0.96019;
+        }
+        55% {
+          opacity: 0.08594;
+        }
+        60% {
+          opacity: 0.20313;
+        }
+        65% {
+          opacity: 0.71988;
+        }
+        70% {
+          opacity: 0.53455;
+        }
+        75% {
+          opacity: 0.37288;
+        }
+        80% {
+          opacity: 0.71428;
+        }
+        85% {
+          opacity: 0.70419;
+        }
+        90% {
+          opacity: 0.7003;
+        }
+        95% {
+          opacity: 0.36108;
+        }
+        100% {
+          opacity: 0.24387;
+        }
+      }
+
+      @keyframes scanlines {
+        0% {
+          background-position: 0 0;
+        }
+        100% {
+          background-position: 0 100%;
+        }
+      }
+
+      @keyframes textGlow {
+        from {
+          text-shadow: 0 0 10px #4d9eff, 0 0 20px #4d9eff, 0 0 30px #4d9eff, 0 0 40px #0066ff, 0 0 70px #0066ff, 0 0 80px #0066ff, 0 0 100px #0066ff;
+        }
+        to {
+          text-shadow: 0 0 5px #4d9eff, 0 0 10px #4d9eff, 0 0 15px #4d9eff, 0 0 20px #0066ff, 0 0 35px #0066ff, 0 0 40px #0066ff, 0 0 50px #0066ff;
+        }
+      }
+
+      @keyframes blink {
+        50% {
+          opacity: 0;
+        }
+      }
+
+      @keyframes glitch {
+        2%,
+        64% {
+          transform: translate(2px, 0) skew(0deg);
+        }
+        4%,
+        60% {
+          transform: translate(-2px, 0) skew(0deg);
+        }
+        62% {
+          transform: translate(0, 0) skew(5deg);
+        }
+      }
+
+      @keyframes noise {
+        0%,
+        100% {
+          transform: translate(0, 0);
+        }
+        10% {
+          transform: translate(-5%, -5%);
+        }
+        20% {
+          transform: translate(-10%, 5%);
+        }
+        30% {
+          transform: translate(5%, -10%);
+        }
+        40% {
+          transform: translate(-5%, 15%);
+        }
+        50% {
+          transform: translate(-10%, 5%);
+        }
+        60% {
+          transform: translate(15%, 0);
+        }
+        70% {
+          transform: translate(0, 10%);
+        }
+        80% {
+          transform: translate(-15%, 0);
+        }
+        90% {
+          transform: translate(10%, 5%);
+        }
+      }
+
+      .glitch-copy {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        opacity: 0;
+      }
+
+      .glitch-copy:nth-child(2) {
+        color: #ff00ff;
+        animation: glitch-anim-1 2s infinite linear alternate-reverse;
+      }
+
+      .glitch-copy:nth-child(3) {
+        color: #00ffff;
+        animation: glitch-anim-2 3s infinite linear alternate-reverse;
+      }
+
+      @keyframes glitch-anim-1 {
+        0% {
+          opacity: 1;
+          transform: translateX(0);
+          clip-path: polygon(0 2%, 100% 2%, 100% 5%, 0 5%);
+        }
+        10% {
+          clip-path: polygon(0 15%, 100% 15%, 100% 15%, 0 15%);
+          transform: translateX(-5px);
+        }
+        20% {
+          clip-path: polygon(0 10%, 100% 10%, 100% 20%, 0 20%);
+          transform: translateX(5px);
+        }
+        30% {
+          clip-path: polygon(0 1%, 100% 1%, 100% 2%, 0 2%);
+          transform: translateX(-5px);
+        }
+        40% {
+          clip-path: polygon(0 33%, 100% 33%, 100% 33%, 0 33%);
+          transform: translateX(5px);
+        }
+        50% {
+          clip-path: polygon(0 44%, 100% 44%, 100% 44%, 0 44%);
+          transform: translateX(-5px);
+        }
+        60% {
+          clip-path: polygon(0 50%, 100% 50%, 100% 20%, 0 20%);
+          transform: translateX(5px);
+        }
+        70% {
+          clip-path: polygon(0 70%, 100% 70%, 100% 70%, 0 70%);
+          transform: translateX(-5px);
+        }
+        80% {
+          clip-path: polygon(0 80%, 100% 80%, 100% 80%, 0 80%);
+          transform: translateX(5px);
+        }
+        90% {
+          clip-path: polygon(0 50%, 100% 50%, 100% 55%, 0 55%);
+          transform: translateX(-5px);
+        }
+        100% {
+          clip-path: polygon(0 70%, 100% 70%, 100% 80%, 0 80%);
+          transform: translateX(0);
+        }
+      }
+
+      @keyframes glitch-anim-2 {
+        0% {
+          opacity: 1;
+          transform: translateX(0);
+          clip-path: polygon(0 25%, 100% 25%, 100% 30%, 0 30%);
+        }
+        15% {
+          clip-path: polygon(0 3%, 100% 3%, 100% 3%, 0 3%);
+          transform: translateX(5px);
+        }
+        30% {
+          clip-path: polygon(0 5%, 100% 5%, 100% 20%, 0 20%);
+          transform: translateX(-5px);
+        }
+        45% {
+          clip-path: polygon(0 20%, 100% 20%, 100% 20%, 0 20%);
+          transform: translateX(5px);
+        }
+        60% {
+          clip-path: polygon(0 40%, 100% 40%, 100% 40%, 0 40%);
+          transform: translateX(-5px);
+        }
+        75% {
+          clip-path: polygon(0 65%, 100% 65%, 100% 40%, 0 40%);
+          transform: translateX(5px);
+        }
+        90% {
+          clip-path: polygon(0 80%, 100% 80%, 100% 80%, 0 80%);
+          transform: translateX(-5px);
+        }
+        100% {
+          clip-path: polygon(0 50%, 100% 50%, 100% 55%, 0 55%);
+          transform: translateX(0);
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="crt">
+      <div class="noise"></div>
+      <div class="screen">
+        <div class="terminal">
+          <h1 id="mainText">
+            <span class="glitch-copy"></span>
+            <span class="glitch-copy"></span>
+            SHALL WE PLAY A GAME?<span class="cursor"></span>
+          </h1>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      // Populate glitch copies
+      const mainText = document.getElementById("mainText");
+      const glitchCopies = document.querySelectorAll(".glitch-copy");
+      const text = "SHALL WE PLAY A GAME?";
+
+      glitchCopies.forEach((copy) => {
+        copy.textContent = text;
+      });
+
+      // Random intense glitch effect
+      function randomGlitch() {
+        const intensity = Math.random();
+        if (intensity > 0.95) {
+          mainText.style.transform = `translate(${Math.random() * 10 - 5}px, ${Math.random() * 10 - 5}px)`;
+          setTimeout(() => {
+            mainText.style.transform = "translate(0, 0)";
+          }, 50);
+        }
+      }
+
+      setInterval(randomGlitch, 100);
+
+      // Screen flicker intensity variation
+      const crt = document.querySelector(".crt");
+      function varyFlicker() {
+        if (Math.random() > 0.98) {
+          crt.style.animation = "flicker 0.05s infinite";
+          setTimeout(() => {
+            crt.style.animation = "flicker 0.15s infinite";
+          }, 200);
+        }
+      }
+
+      setInterval(varyFlicker, 1000);
+
+      // Chromatic aberration on mouse move
+      document.addEventListener("mousemove", (e) => {
+        const x = (e.clientX / window.innerWidth - 0.5) * 2;
+        const y = (e.clientY / window.innerHeight - 0.5) * 2;
+
+        glitchCopies[0].style.transform = `translate(${x * 3}px, ${y * 3}px)`;
+        glitchCopies[1].style.transform = `translate(${-x * 3}px, ${-y * 3}px)`;
+      });
+    </script>
+  </body>
+</html>
