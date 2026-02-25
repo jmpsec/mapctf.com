@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
@@ -10,7 +10,14 @@
     <link rel="icon" type="image/png" sizes="16x16" href="/img/favicon-16x16.png" />
     <link rel="manifest" href="/site.webmanifest" />
     <style>
-      @import url("https://fonts.googleapis.com/css2?family=VT323&display=swap");
+      @import url("https://fonts.googleapis.com/css?family=Source+Code+Pro:400,700,300");
+
+      :root {
+        --mctf-bg: #13242b;
+        --mctf-cyan: #21b4ba;
+        --mctf-cyan-light: #cff8fa;
+        --mctf-yellow: #ead44d;
+      }
 
       * {
         margin: 0;
@@ -19,124 +26,173 @@
       }
 
       body {
-        background: #000;
+        min-height: 100vh;
+        font-family: "Source Code Pro", Courier, monospace;
+        color: var(--mctf-cyan-light);
+        background: radial-gradient(circle at 20% 10%, rgba(33, 180, 186, 0.15), transparent 35%), radial-gradient(circle at 85% 90%, rgba(234, 212, 77, 0.08), transparent 45%), var(--mctf-bg);
+        display: grid;
+        place-items: center;
+        padding: 1.25rem;
+      }
+
+      .panel {
+        width: min(900px, 100%);
+        border: 1px solid var(--mctf-cyan);
+        border-radius: 8px;
+        padding: 1.25rem;
+        background: rgba(7, 19, 23, 0.88);
+        box-shadow:
+          0 0 10px rgba(33, 180, 186, 0.45),
+          0 0 28px rgba(33, 180, 186, 0.24);
+      }
+
+      .world-map-wrap {
+        position: relative;
+        height: clamp(170px, 28vw, 260px);
+        border: 1px solid var(--mctf-cyan);
+        border-radius: 6px;
         overflow: hidden;
-        font-family: "VT323", monospace;
-        height: 100vh;
-        display: flex;
-        align-items: center;
-        justify-content: center;
+        margin-bottom: 1rem;
+        background: #0a161a;
+        box-shadow:
+          inset 0 0 16px rgba(33, 180, 186, 0.35),
+          0 0 20px rgba(33, 180, 186, 0.35);
+        isolation: isolate;
       }
 
-      .crt {
-        position: relative;
-        width: 100vw;
-        height: 100vh;
-        background: radial-gradient(ellipse at center, #0a0a0a 0%, #000000 100%);
-      }
-
-      .crt::before {
-        content: " ";
-        display: block;
+      .world-map-wrap::before {
+        content: "";
         position: absolute;
-        top: 0;
-        left: 0;
-        bottom: 0;
-        right: 0;
-        background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), linear-gradient(90deg, rgba(0, 0, 255, 0.06), rgba(0, 100, 255, 0.02), rgba(0, 150, 255, 0.06));
-        z-index: 2;
-        background-size: 100% 2px, 3px 100%;
-        pointer-events: none;
-        animation: scanlines 0.5s linear infinite;
-      }
-
-      .crt::after {
-        content: " ";
-        display: block;
-        position: absolute;
-        top: 0;
-        left: 0;
-        bottom: 0;
-        right: 0;
-        background: rgba(18, 16, 16, 0.1);
-        opacity: 0;
-        z-index: 2;
-        pointer-events: none;
-      }
-
-      .screen {
-        width: 100%;
-        height: 100%;
-        position: relative;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        text-align: center;
-      }
-
-      .terminal {
-        position: relative;
+        inset: 0;
+        background: url("/img/bg--world.png") center top no-repeat;
+        background-size: auto 95%;
+        opacity: 0.92;
+        filter: brightness(1.28) contrast(1.12);
         z-index: 1;
       }
 
-      h1 {
-        font-size: clamp(2rem, 6vw, 4rem);
-        color: #00ffff;
-        text-shadow: 0 0 3px #00ffff, 0 0 6px #00cccc, 0 0 9px #00cccc;
-        animation: textGlow 2s ease-in-out infinite alternate, glitch 3s infinite;
-        letter-spacing: 0.05em;
-        font-weight: 400;
+      .world-map-wrap::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background-image: linear-gradient(rgba(33, 180, 186, 0.15) 1px, transparent 1px), linear-gradient(90deg, rgba(33, 180, 186, 0.15) 1px, transparent 1px);
+        background-size: 28px 28px;
+        z-index: 2;
+      }
+
+      .map-dots {
+        position: absolute;
+        inset: 0;
+        z-index: 3;
+        pointer-events: none;
+        -webkit-mask-image: url("/img/bg--world.png");
+        -webkit-mask-repeat: no-repeat;
+        -webkit-mask-position: center top;
+        -webkit-mask-size: auto 95%;
+        mask-image: url("/img/bg--world.png");
+        mask-repeat: no-repeat;
+        mask-position: center top;
+        mask-size: auto 95%;
+      }
+
+      .map-dot {
+        position: absolute;
+        width: 10px;
+        height: 10px;
+        background: #ff2b2b;
+        clip-path: polygon(50% 0, 0 100%, 100% 100%);
+        box-shadow:
+          0 0 8px rgba(255, 43, 43, 0.8),
+          0 0 16px rgba(255, 43, 43, 0.6);
+        animation: pulse-red 3.8s ease-in-out infinite;
+      }
+
+      .title {
         position: relative;
+        display: inline-block;
+        font-size: clamp(1.8rem, 5vw, 3rem);
+        line-height: 1.1;
+        letter-spacing: 0.05em;
         text-transform: uppercase;
-        font-family: "VT323", monospace;
-        font-style: normal;
-        line-height: 1;
-        margin: 0;
-        padding: 0;
-        -webkit-text-stroke: 1px #66ffff;
-        paint-order: stroke fill;
+        color: var(--mctf-cyan-light);
+        margin-bottom: 0.4rem;
+      }
+
+      .title::before,
+      .title::after {
+        content: attr(data-text);
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100%;
+        clip: rect(0, 0, 0, 0);
+      }
+
+      .title::before {
+        left: -2px;
+        text-shadow: 2px 0 #000;
+        animation: glitch-anim-2 3s infinite linear alternate-reverse;
+      }
+
+      .title::after {
+        left: 2px;
+        text-shadow: -1px 0 var(--mctf-cyan);
+        animation: glitch-anim-1 2s infinite linear alternate-reverse;
       }
 
       .cursor {
         display: inline-block;
         width: 0.6em;
         height: 1em;
-        background: #00ffff;
         margin-left: 0.2em;
-        animation: blink 1s step-end infinite;
         vertical-align: text-bottom;
+        background: var(--mctf-cyan);
+        animation: blink 1s step-end infinite;
       }
 
-      .noise {
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        pointer-events: none;
-        opacity: 0.05;
-        z-index: 3;
-        background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
-        animation: noise 0.2s infinite;
+      .sub {
+        margin-bottom: 1rem;
+        color: var(--mctf-cyan);
       }
 
-      @keyframes scanlines {
-        0% {
-          background-position: 0 0;
-        }
-        100% {
-          background-position: 0 100%;
-        }
+      .subscribe-form {
+        display: grid;
+        grid-template-columns: 1fr auto;
+        gap: 0.6rem;
       }
 
-      @keyframes textGlow {
-        from {
-          text-shadow: 0 0 3px #00ffff, 0 0 6px #00cccc, 0 0 9px #00cccc;
-          -webkit-text-stroke: 1px #66ffff;
-        }
-        to {
-          text-shadow: 0 0 2px #00ffff, 0 0 4px #00cccc, 0 0 6px #00cccc;
-          -webkit-text-stroke: 1px #99ffff;
+      .subscribe-form input {
+        min-width: 80px;
+        background: transparent;
+        border: 1px solid var(--mctf-cyan);
+        border-radius: 4px;
+        color: var(--mctf-cyan-light);
+        padding: 10px;
+        font-size: 14px;
+        font-family: "Source Code Pro", Courier, monospace;
+      }
+
+      .subscribe-form button {
+        border: 1px solid var(--mctf-yellow);
+        background: transparent;
+        color: var(--mctf-yellow);
+        border-radius: 4px;
+        padding: 10px 16px;
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+        font-weight: 700;
+        cursor: pointer;
+        font-family: "Source Code Pro", Courier, monospace;
+      }
+
+      .subscribe-form button:hover {
+        background: var(--mctf-yellow);
+        color: var(--mctf-bg);
+      }
+
+      @media (max-width: 640px) {
+        .subscribe-form {
+          grid-template-columns: 1fr;
         }
       }
 
@@ -146,203 +202,107 @@
         }
       }
 
-      @keyframes glitch {
-        2%,
-        64% {
-          transform: translate(2px, 0) skew(0deg);
-        }
-        4%,
-        60% {
-          transform: translate(-2px, 0) skew(0deg);
-        }
-        62% {
-          transform: translate(0, 0) skew(5deg);
-        }
-      }
-
-      @keyframes noise {
-        0%,
-        100% {
-          transform: translate(0, 0);
-        }
-        10% {
-          transform: translate(-5%, -5%);
-        }
-        20% {
-          transform: translate(-10%, 5%);
-        }
-        30% {
-          transform: translate(5%, -10%);
-        }
-        40% {
-          transform: translate(-5%, 15%);
-        }
-        50% {
-          transform: translate(-10%, 5%);
-        }
-        60% {
-          transform: translate(15%, 0);
-        }
-        70% {
-          transform: translate(0, 10%);
-        }
-        80% {
-          transform: translate(-15%, 0);
-        }
-        90% {
-          transform: translate(10%, 5%);
-        }
-      }
-
-      .glitch-copy {
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        opacity: 0;
-      }
-
-      .glitch-copy:nth-child(2) {
-        color: #ff00ff;
-        animation: glitch-anim-1 2s infinite linear alternate-reverse;
-      }
-
-      .glitch-copy:nth-child(3) {
-        color: #00ffff;
-        animation: glitch-anim-2 3s infinite linear alternate-reverse;
-      }
-
       @keyframes glitch-anim-1 {
         0% {
-          opacity: 1;
-          transform: translateX(0);
-          clip-path: polygon(0 2%, 100% 2%, 100% 5%, 0 5%);
-        }
-        10% {
-          clip-path: polygon(0 15%, 100% 15%, 100% 15%, 0 15%);
-          transform: translateX(-5px);
+          clip: rect(49px, 820px, 79px, 0);
         }
         20% {
-          clip-path: polygon(0 10%, 100% 10%, 100% 20%, 0 20%);
-          transform: translateX(5px);
-        }
-        30% {
-          clip-path: polygon(0 1%, 100% 1%, 100% 2%, 0 2%);
-          transform: translateX(-5px);
+          clip: rect(8px, 820px, 20px, 0);
         }
         40% {
-          clip-path: polygon(0 33%, 100% 33%, 100% 33%, 0 33%);
-          transform: translateX(5px);
-        }
-        50% {
-          clip-path: polygon(0 44%, 100% 44%, 100% 44%, 0 44%);
-          transform: translateX(-5px);
+          clip: rect(79px, 820px, 53px, 0);
         }
         60% {
-          clip-path: polygon(0 50%, 100% 50%, 100% 20%, 0 20%);
-          transform: translateX(5px);
-        }
-        70% {
-          clip-path: polygon(0 70%, 100% 70%, 100% 70%, 0 70%);
-          transform: translateX(-5px);
+          clip: rect(2px, 820px, 109px, 0);
         }
         80% {
-          clip-path: polygon(0 80%, 100% 80%, 100% 80%, 0 80%);
-          transform: translateX(5px);
-        }
-        90% {
-          clip-path: polygon(0 50%, 100% 50%, 100% 55%, 0 55%);
-          transform: translateX(-5px);
+          clip: rect(100px, 820px, 113px, 0);
         }
         100% {
-          clip-path: polygon(0 70%, 100% 70%, 100% 80%, 0 80%);
-          transform: translateX(0);
+          clip: rect(33px, 820px, 6px, 0);
         }
       }
 
       @keyframes glitch-anim-2 {
         0% {
-          opacity: 1;
-          transform: translateX(0);
-          clip-path: polygon(0 25%, 100% 25%, 100% 30%, 0 30%);
+          clip: rect(93px, 820px, 108px, 0);
         }
-        15% {
-          clip-path: polygon(0 3%, 100% 3%, 100% 3%, 0 3%);
-          transform: translateX(5px);
+        20% {
+          clip: rect(11px, 820px, 110px, 0);
         }
-        30% {
-          clip-path: polygon(0 5%, 100% 5%, 100% 20%, 0 20%);
-          transform: translateX(-5px);
-        }
-        45% {
-          clip-path: polygon(0 20%, 100% 20%, 100% 20%, 0 20%);
-          transform: translateX(5px);
+        40% {
+          clip: rect(79px, 820px, 2px, 0);
         }
         60% {
-          clip-path: polygon(0 40%, 100% 40%, 100% 40%, 0 40%);
-          transform: translateX(-5px);
+          clip: rect(52px, 820px, 15px, 0);
         }
-        75% {
-          clip-path: polygon(0 65%, 100% 65%, 100% 40%, 0 40%);
-          transform: translateX(5px);
-        }
-        90% {
-          clip-path: polygon(0 80%, 100% 80%, 100% 80%, 0 80%);
-          transform: translateX(-5px);
+        80% {
+          clip: rect(36px, 820px, 42px, 0);
         }
         100% {
-          clip-path: polygon(0 50%, 100% 50%, 100% 55%, 0 55%);
-          transform: translateX(0);
+          clip: rect(57px, 820px, 84px, 0);
+        }
+      }
+
+      @keyframes pulse-red {
+        0%,
+        100% {
+          opacity: 0.25;
+          transform: scale(0.7);
+        }
+        50% {
+          opacity: 0.85;
+          transform: scale(1.25);
         }
       }
     </style>
   </head>
   <body>
-    <div class="crt">
-      <div class="noise"></div>
-      <div class="screen">
-        <div class="terminal">
-          <h1 id="mainText">
-            <span class="glitch-copy"></span>
-            <span class="glitch-copy"></span>
-            SHALL WE PLAY A GAME?<span class="cursor"></span>
-          </h1>
-        </div>
+    <main class="panel">
+      <div class="world-map-wrap" aria-hidden="true">
+        <div class="map-dots" id="mapDots"></div>
       </div>
-    </div>
 
+      <h1 class="title" data-text="SHALL WE PLAY A GAME?">
+        SHALL WE PLAY A GAME?
+        <span class="cursor"></span>
+      </h1>
+      <p class="sub">Subscribe to the MapCTF mailing list for launch updates.</p>
+
+      <script async src="https://subscribe-forms.beehiiv.com/embed.js"></script>
+      <iframe src="https://subscribe-forms.beehiiv.com/cbe18fa2-3de0-45c3-9b62-aed015d85399" class="beehiiv-embed" data-test-id="beehiiv-embed" frameborder="0" scrolling="no" style="width: 100%; height: 87px; margin: 0; border-radius: 0px 0px 0px 0px !important; background-color: transparent; box-shadow: 0 0 #0000; max-width: 100%"></iframe>
+    </main>
     <script>
-      // Populate glitch copies
-      const mainText = document.getElementById("mainText");
-      const glitchCopies = document.querySelectorAll(".glitch-copy");
-      const text = "SHALL WE PLAY A GAME?";
+      const mapDots = document.getElementById("mapDots");
+      const dotCount = 16;
 
-      glitchCopies.forEach((copy) => {
-        copy.textContent = text;
-      });
-
-      // Random intense glitch effect
-      function randomGlitch() {
-        const intensity = Math.random();
-        if (intensity > 0.95) {
-          mainText.style.transform = `translate(${Math.random() * 10 - 5}px, ${Math.random() * 10 - 5}px)`;
-          setTimeout(() => {
-            mainText.style.transform = "translate(0, 0)";
-          }, 50);
-        }
+      function randomRange(min, max) {
+        return Math.random() * (max - min) + min;
       }
 
-      setInterval(randomGlitch, 100);
+      function placeDot(dot) {
+        dot.style.left = `${randomRange(0, 100)}%`;
+        dot.style.top = `${randomRange(0, 100)}%`;
+      }
 
-      // Chromatic aberration on mouse move
-      document.addEventListener("mousemove", (e) => {
-        const x = (e.clientX / window.innerWidth - 0.5) * 2;
-        const y = (e.clientY / window.innerHeight - 0.5) * 2;
+      function spawnDot() {
+        const dot = document.createElement("span");
+        dot.className = "map-dot";
+        dot.style.animationDelay = `${Math.random() * 4}s`;
+        dot.style.animationDuration = `${randomRange(3.2, 5.4)}s`;
+        placeDot(dot);
+        mapDots.appendChild(dot);
 
-        glitchCopies[0].style.transform = `translate(${x * 3}px, ${y * 3}px)`;
-        glitchCopies[1].style.transform = `translate(${-x * 3}px, ${-y * 3}px)`;
-      });
+        const moveDot = () => {
+          placeDot(dot);
+          setTimeout(moveDot, randomRange(3200, 6400));
+        };
+        setTimeout(moveDot, randomRange(3200, 6400));
+      }
+
+      for (let i = 0; i < dotCount; i += 1) {
+        spawnDot();
+      }
     </script>
   </body>
 </html>

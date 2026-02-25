@@ -8,3 +8,6 @@
 # IDE metadata
 .vscode
 .idea
+
+# SaaS
+saas
