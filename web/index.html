@@ -190,6 +190,38 @@
         color: var(--mctf-bg);
       }
 
+      .social-links {
+        margin-top: 0.9rem;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.6rem;
+      }
+
+      .social-link {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.45rem;
+        padding: 8px 12px;
+        border: 1px solid var(--mctf-cyan);
+        border-radius: 4px;
+        color: var(--mctf-cyan-light);
+        text-decoration: none;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        font-size: 0.82rem;
+      }
+
+      .social-link svg {
+        width: 14px;
+        height: 14px;
+        fill: currentColor;
+      }
+
+      .social-link:hover {
+        border-color: var(--mctf-yellow);
+        color: var(--mctf-yellow);
+      }
+
       @media (max-width: 640px) {
         .subscribe-form {
           grid-template-columns: 1fr;
@@ -283,6 +315,27 @@
       <!-- Beehiiv embed -->
       <script async src="https://subscribe-forms.beehiiv.com/embed.js"></script>
       <iframe src="https://subscribe-forms.beehiiv.com/cbe18fa2-3de0-45c3-9b62-aed015d85399" class="beehiiv-embed" data-test-id="beehiiv-embed" frameborder="0" scrolling="no" style="width: 100%; height: 87px; margin: 0; border-radius: 0px 0px 0px 0px !important; background-color: transparent; box-shadow: 0 0 #0000; max-width: 100%"></iframe>
+
+      <nav class="social-links" aria-label="Social links">
+        <a class="social-link" href="https://github.com/mapctf" target="_blank" rel="noopener noreferrer">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M12 .5A12 12 0 0 0 8.2 23.9c.6.1.8-.3.8-.6v-2.2c-3.3.7-4-1.4-4-1.4-.6-1.3-1.3-1.7-1.3-1.7-1.1-.7.1-.7.1-.7 1.2.1 1.9 1.2 1.9 1.2 1.1 1.9 2.9 1.3 3.6 1 .1-.8.4-1.3.7-1.6-2.7-.3-5.5-1.4-5.5-6A4.7 4.7 0 0 1 6.7 8c-.1-.3-.5-1.5.1-3.1 0 0 1-.3 3.2 1.2a11 11 0 0 1 5.9 0c2.2-1.5 3.2-1.2 3.2-1.2.6 1.6.2 2.8.1 3.1a4.7 4.7 0 0 1 1.2 3.3c0 4.6-2.8 5.6-5.5 6 .4.4.8 1.1.8 2.2v3.2c0 .3.2.7.8.6A12 12 0 0 0 12 .5Z" />
+          </svg>
+          GitHub
+        </a>
+        <a class="social-link" href="https://t.me/mapctf" target="_blank" rel="noopener noreferrer">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M23.2 4.4c.3-1.4-1-2.5-2.2-1.9L2.4 9.7c-1.4.5-1.3 2.6.1 3l4.8 1.5 1.8 5.6c.4 1.3 2 1.8 3.1.9l2.7-2.2 4.8 3.6c1.1.8 2.6.2 2.8-1.1l.7-4.6 1.1-12Z" />
+          </svg>
+          Telegram
+        </a>
+        <a class="social-link" href="https://discord.gg/mapctf" target="_blank" rel="noopener noreferrer">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M20.3 4.4a19 19 0 0 0-4.7-1.5l-.2.4-.7 1.5a17.3 17.3 0 0 0-5.4 0l-.7-1.5-.2-.4a19 19 0 0 0-4.7 1.5C1 8.3.4 12 .7 15.7a19.3 19.3 0 0 0 5.7 2.9l1.2-1.9a12.4 12.4 0 0 1-1.9-.9l.5-.4c3.7 1.7 7.8 1.7 11.4 0l.5.4c-.6.4-1.3.7-1.9.9l1.2 1.9a19.3 19.3 0 0 0 5.7-2.9c.5-4.3-.7-8-2.8-11.3ZM9.5 13.7c-1.1 0-1.9-1-1.9-2.2s.8-2.2 1.9-2.2 1.9 1 1.9 2.2-.8 2.2-1.9 2.2Zm5 0c-1.1 0-1.9-1-1.9-2.2s.8-2.2 1.9-2.2 1.9 1 1.9 2.2-.8 2.2-1.9 2.2Z" />
+          </svg>
+          Discord
+        </a>
+      </nav>
     </main>
     <!-- Map dot animation script -->
     <script>
