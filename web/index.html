@@ -3,117 +3,272 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta
-      name="description"
-      content="MapCTF is a map-based cybersecurity CTF platform. Join the community, get updates, and prepare to play."
-    />
-    <meta
-      name="keywords"
-      content="MapCTF, CTF, cybersecurity, capture the flag, hacking competition, security training, cyberrange, infosec, cybersec, hacking challenges"
-    />
+    <meta name="description" content="MapCTF turns cybersecurity training into an interactive, map-based capture the flag experience from the creators of FBCTF." />
+    <meta name="keywords" content="MapCTF, CTF, cybersecurity, capture the flag, hacking competition, security training, cyber range, FBCTF" />
     <meta name="robots" content="index, follow" />
-    <meta name="theme-color" content="#13242b" />
+    <meta name="theme-color" content="#071317" />
     <link rel="canonical" href="https://mapctf.com/" />
 
     <meta property="og:type" content="website" />
-    <meta property="og:title" content="MapCTF | Shall We Play A Game?" />
-    <meta
-      property="og:description"
-      content="MapCTF is a map-based cybersecurity CTF platform. Join the community and get updates."
-    />
+    <meta property="og:title" content="MapCTF | Cybersecurity is learned by doing" />
+    <meta property="og:description" content="An interactive, map-based CTF platform from the creators of FBCTF." />
     <meta property="og:url" content="https://mapctf.com/" />
     <meta property="og:site_name" content="MapCTF" />
-    <meta
-      property="og:image"
-      content="https://mapctf.com/img/android-chrome-512x512.png"
-    />
-    <meta property="og:image:alt" content="MapCTF logo thumbnail" />
+    <meta property="og:image" content="https://mapctf.com/img/android-chrome-512x512.png" />
+    <meta property="og:image:alt" content="MapCTF logo" />
 
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="MapCTF | Shall We Play A Game?" />
-    <meta
-      name="twitter:description"
-      content="MapCTF is a map-based cybersecurity CTF platform. Join the community and get updates."
-    />
-    <meta
-      name="twitter:image"
-      content="https://mapctf.com/img/android-chrome-512x512.png"
-    />
-    <title>Shall we play a game?</title>
+    <meta name="twitter:title" content="MapCTF | Cybersecurity is learned by doing" />
+    <meta name="twitter:description" content="An interactive, map-based CTF platform from the creators of FBCTF." />
+    <meta name="twitter:image" content="https://mapctf.com/img/android-chrome-512x512.png" />
+
+    <title>MapCTF | Cybersecurity is learned by doing</title>
     <link rel="icon" href="/img/favicon.ico" />
     <link rel="apple-touch-icon" sizes="180x180" href="/img/apple-touch-icon.png" />
     <link rel="icon" type="image/png" sizes="32x32" href="/img/favicon-32x32.png" />
     <link rel="icon" type="image/png" sizes="16x16" href="/img/favicon-16x16.png" />
     <link rel="manifest" href="/site.webmanifest" />
+
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-89CZP77XLW"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      gtag("js", new Date());
+      gtag("config", "G-89CZP77XLW");
+    </script>
+
     <style>
-      @import url("https://fonts.googleapis.com/css?family=Source+Code+Pro:400,700,300");
+      @import url("https://fonts.googleapis.com/css?family=Source+Code+Pro:300,400,600,700");
 
       :root {
-        --mctf-bg: #13242b;
-        --mctf-cyan: #21b4ba;
-        --mctf-cyan-light: #cff8fa;
-        --mctf-yellow: #ead44d;
+        --bg: #071317;
+        --surface: #0d2026;
+        --line: #24505a;
+        --cyan: #28c4c9;
+        --cyan-light: #d9fcfd;
+        --yellow: #ead44d;
+        --red: #ff4b4b;
+        --muted: #8bb2b8;
+        --max-width: 1180px;
       }
 
       * {
+        box-sizing: border-box;
         margin: 0;
         padding: 0;
-        box-sizing: border-box;
+      }
+
+      html {
+        scroll-behavior: smooth;
       }
 
       body {
-        min-height: 100vh;
+        min-width: 320px;
         font-family: "Source Code Pro", Courier, monospace;
-        color: var(--mctf-cyan-light);
-        background: radial-gradient(circle at 20% 10%, rgba(33, 180, 186, 0.15), transparent 35%), radial-gradient(circle at 85% 90%, rgba(234, 212, 77, 0.08), transparent 45%), var(--mctf-bg);
-        display: grid;
-        place-items: center;
-        padding: 1.25rem;
+        color: var(--cyan-light);
+        background: var(--bg);
+        line-height: 1.65;
       }
 
-      .panel {
-        width: min(900px, 100%);
-        border: 1px solid var(--mctf-cyan);
-        border-radius: 8px;
-        padding: 1.25rem;
-        background: rgba(7, 19, 23, 0.88);
-        box-shadow:
-          0 0 10px rgba(33, 180, 186, 0.45),
-          0 0 28px rgba(33, 180, 186, 0.24);
+      a {
+        color: inherit;
+      }
+
+      .shell {
+        width: min(var(--max-width), calc(100% - 40px));
+        margin: 0 auto;
+      }
+
+      .site-header {
+        position: sticky;
+        top: 0;
+        z-index: 20;
+        border-bottom: 1px solid var(--line);
+        background: rgba(7, 19, 23, 0.94);
+        backdrop-filter: blur(12px);
+      }
+
+      .header-inner {
+        min-height: 64px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 24px;
+      }
+
+      .brand {
+        color: var(--cyan-light);
+        text-decoration: none;
+        font-size: 1.05rem;
+        font-weight: 700;
+        text-transform: uppercase;
+      }
+
+      .brand span {
+        color: var(--cyan);
+      }
+
+      .main-nav {
+        display: flex;
+        align-items: center;
+        gap: 24px;
+      }
+
+      .main-nav a {
+        color: var(--muted);
+        text-decoration: none;
+        font-size: 0.78rem;
+        text-transform: uppercase;
+      }
+
+      .main-nav a:hover,
+      .main-nav a:focus-visible {
+        color: var(--yellow);
+      }
+
+      .hero {
+        min-height: 72svh;
+        display: grid;
+        grid-template-columns: minmax(0, 0.9fr) minmax(460px, 1.1fr);
+        align-items: center;
+        gap: clamp(40px, 7vw, 88px);
+        padding: 52px 0;
+      }
+
+      .eyebrow {
+        margin-bottom: 16px;
+        color: var(--yellow);
+        font-size: 0.75rem;
+        font-weight: 700;
+        text-transform: uppercase;
+      }
+
+      h1,
+      h2,
+      h3 {
+        line-height: 1.15;
+      }
+
+      h1 {
+        max-width: 720px;
+        font-size: 4.4rem;
+        font-weight: 700;
+        text-transform: uppercase;
+      }
+
+      h1 span {
+        color: var(--cyan);
+      }
+
+      .hero-copy {
+        max-width: 630px;
+        margin-top: 24px;
+        color: #bad4d8;
+        font-size: 1.08rem;
+      }
+
+      .hero-copy strong,
+      .lineage-copy strong {
+        color: var(--cyan-light);
+      }
+
+      .actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 12px;
+        margin-top: 32px;
+      }
+
+      .button {
+        min-height: 44px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        border: 1px solid var(--yellow);
+        border-radius: 4px;
+        padding: 10px 18px;
+        color: var(--bg);
+        background: var(--yellow);
+        text-decoration: none;
+        font-size: 0.78rem;
+        font-weight: 700;
+        text-transform: uppercase;
+      }
+
+      .button.secondary {
+        border-color: var(--cyan);
+        color: var(--cyan-light);
+        background: transparent;
+      }
+
+      .button:hover,
+      .button:focus-visible {
+        filter: brightness(1.12);
+      }
+
+      .map-console {
+        border: 1px solid var(--cyan);
+        border-radius: 6px;
+        overflow: hidden;
+        background: var(--surface);
+        box-shadow: 0 0 36px rgba(40, 196, 201, 0.16);
+      }
+
+      .console-bar {
+        height: 42px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        border-bottom: 1px solid var(--line);
+        padding: 0 14px;
+        color: var(--muted);
+        font-size: 0.68rem;
+        text-transform: uppercase;
+      }
+
+      .live {
+        display: inline-flex;
+        align-items: center;
+        gap: 7px;
+        color: var(--cyan-light);
+      }
+
+      .live::before {
+        width: 7px;
+        height: 7px;
+        border-radius: 50%;
+        background: var(--red);
+        content: "";
+        box-shadow: 0 0 8px var(--red);
       }
 
       .world-map-wrap {
         position: relative;
-        height: clamp(170px, 28vw, 260px);
-        border: 1px solid var(--mctf-cyan);
-        border-radius: 6px;
+        aspect-ratio: 16 / 9;
         overflow: hidden;
-        margin-bottom: 1rem;
-        background: #13242b;
-        box-shadow:
-          inset 0 0 16px rgba(33, 180, 186, 0.35),
-          0 0 20px rgba(33, 180, 186, 0.35);
         isolation: isolate;
       }
 
       .world-map-wrap::before {
-        content: "";
         position: absolute;
         inset: 0;
-        background: url("/img/bg--world.png") center top no-repeat;
-        background-size: auto 95%;
-        opacity: 0.92;
-        filter: brightness(1.28) contrast(1.12);
         z-index: 1;
+        background: url("/img/bg--world.png") center no-repeat;
+        background-size: 92% auto;
+        content: "";
+        filter: brightness(1.35) contrast(1.12);
       }
 
       .world-map-wrap::after {
-        content: "";
         position: absolute;
         inset: 0;
-        background-image: linear-gradient(rgba(33, 180, 186, 0.15) 1px, transparent 1px), linear-gradient(90deg, rgba(33, 180, 186, 0.15) 1px, transparent 1px);
-        background-size: 28px 28px;
         z-index: 2;
+        background-image: linear-gradient(rgba(40, 196, 201, 0.1) 1px, transparent 1px), linear-gradient(90deg, rgba(40, 196, 201, 0.1) 1px, transparent 1px);
+        background-size: 24px 24px;
+        content: "";
       }
 
       .map-dots {
@@ -121,146 +276,328 @@
         inset: 0;
         z-index: 3;
         pointer-events: none;
-        -webkit-mask-image: url("/img/bg--world.png");
-        -webkit-mask-repeat: no-repeat;
-        -webkit-mask-position: center top;
-        -webkit-mask-size: auto 95%;
-        mask-image: url("/img/bg--world.png");
-        mask-repeat: no-repeat;
-        mask-position: center top;
-        mask-size: auto 95%;
+        -webkit-mask: url("/img/bg--world.png") center / 92% auto no-repeat;
+        mask: url("/img/bg--world.png") center / 92% auto no-repeat;
       }
 
       .map-dot {
         position: absolute;
-        width: 10px;
-        height: 10px;
-        background: #ff2b2b;
+        width: 9px;
+        height: 9px;
+        background: var(--red);
         clip-path: polygon(50% 0, 0 100%, 100% 100%);
-        box-shadow:
-          0 0 8px rgba(255, 43, 43, 0.8),
-          0 0 16px rgba(255, 43, 43, 0.6);
-        animation: pulse-red 3.8s ease-in-out infinite;
+        filter: drop-shadow(0 0 5px var(--red));
+        animation: pulse 3.8s ease-in-out infinite;
       }
 
-      .title {
+      .map-readout {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        border-top: 1px solid var(--line);
+      }
+
+      .map-readout div {
+        min-width: 0;
+        padding: 14px;
+      }
+
+      .map-readout div + div {
+        border-left: 1px solid var(--line);
+      }
+
+      .map-readout span {
+        display: block;
+        overflow-wrap: anywhere;
+        color: var(--muted);
+        font-size: 0.62rem;
+        text-transform: uppercase;
+      }
+
+      .map-readout strong {
+        display: block;
+        margin-top: 2px;
+        color: var(--cyan-light);
+        font-size: 0.84rem;
+      }
+
+      .signal-strip {
+        border-top: 1px solid var(--line);
+        border-bottom: 1px solid var(--line);
+        background: #09191e;
+      }
+
+      .signal-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+      }
+
+      .signal-grid div {
+        padding: 22px 28px;
+        text-align: center;
+      }
+
+      .signal-grid div + div {
+        border-left: 1px solid var(--line);
+      }
+
+      .signal-grid strong {
+        display: block;
+        color: var(--yellow);
+        font-size: 0.78rem;
+        text-transform: uppercase;
+      }
+
+      .signal-grid span {
+        color: var(--muted);
+        font-size: 0.72rem;
+      }
+
+      .section {
+        padding: 104px 0;
+      }
+
+      .section-alt {
+        border-top: 1px solid var(--line);
+        border-bottom: 1px solid var(--line);
+        background: var(--surface);
+      }
+
+      .section-heading {
+        max-width: 790px;
+        margin-bottom: 48px;
+      }
+
+      .section-heading h2 {
+        max-width: 760px;
+        font-size: 3.2rem;
+      }
+
+      .section-heading p:last-child {
+        max-width: 680px;
+        margin-top: 18px;
+        color: var(--muted);
+      }
+
+      .feature-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 16px;
+      }
+
+      .feature {
+        border: 1px solid var(--line);
+        border-radius: 6px;
+        padding: 28px;
+        background: #09191e;
+      }
+
+      .feature-number {
+        display: block;
+        margin-bottom: 28px;
+        color: var(--cyan);
+        font-size: 0.72rem;
+      }
+
+      .feature h3 {
+        margin-bottom: 12px;
+        font-size: 1.1rem;
+      }
+
+      .feature p {
+        color: var(--muted);
+        font-size: 0.9rem;
+      }
+
+      .platform-grid {
+        display: grid;
+        grid-template-columns: minmax(0, 0.85fr) minmax(420px, 1.15fr);
+        gap: clamp(42px, 8vw, 96px);
+        align-items: start;
+      }
+
+      .platform-copy h2 {
+        margin-bottom: 20px;
+        font-size: 3rem;
+      }
+
+      .platform-copy > p,
+      .lineage-copy p {
+        color: var(--muted);
+      }
+
+      .platform-list {
+        margin-top: 32px;
+        list-style: none;
+      }
+
+      .platform-list li {
+        border-top: 1px solid var(--line);
+        padding: 18px 0;
+      }
+
+      .platform-list strong {
+        display: block;
+        margin-bottom: 5px;
+        color: var(--cyan-light);
+        font-size: 0.92rem;
+      }
+
+      .platform-list span {
+        color: var(--muted);
+        font-size: 0.84rem;
+      }
+
+      .technical-view {
+        border: 1px solid var(--line);
+        border-radius: 6px;
+        overflow: hidden;
+        background: #071317;
+      }
+
+      .technical-view header {
+        border-bottom: 1px solid var(--line);
+        padding: 14px 18px;
+        color: var(--muted);
+        font-size: 0.7rem;
+        text-transform: uppercase;
+      }
+
+      .flow {
+        list-style: none;
+        padding: 12px 22px 22px;
+      }
+
+      .flow li {
+        display: grid;
+        grid-template-columns: 110px 1fr;
+        gap: 18px;
+        border-bottom: 1px solid #18363e;
+        padding: 18px 0;
+      }
+
+      .flow li:last-child {
+        border-bottom: 0;
+      }
+
+      .flow code {
+        color: var(--yellow);
+        font-family: inherit;
+        font-size: 0.74rem;
+      }
+
+      .flow span {
+        color: #b4cdd1;
+        font-size: 0.82rem;
+      }
+
+      .lineage {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) minmax(280px, 0.65fr);
+        align-items: center;
+        gap: 56px;
+      }
+
+      .lineage h2 {
+        max-width: 700px;
+        font-size: 3.2rem;
+      }
+
+      .lineage-copy p {
+        margin-bottom: 18px;
+      }
+
+      .signup {
+        border-top: 1px solid var(--line);
+        padding: 88px 0;
+        text-align: center;
+        background: #09191e;
+      }
+
+      .signup h2 {
+        font-size: 3rem;
+      }
+
+      .game-prompt {
         position: relative;
         display: inline-block;
-        font-size: clamp(1.8rem, 5vw, 3rem);
-        line-height: 1.1;
-        letter-spacing: 0.05em;
         text-transform: uppercase;
-        color: var(--mctf-cyan-light);
-        margin-bottom: 0.4rem;
+        animation: game-glitch 4.5s infinite;
       }
 
-      .title::before,
-      .title::after {
-        content: attr(data-text);
-        position: absolute;
-        left: 0;
-        top: 0;
-        width: 100%;
-        clip: rect(0, 0, 0, 0);
-      }
-
-      .title::before {
-        left: -2px;
-        text-shadow: 2px 0 #000;
-        animation: glitch-anim-2 3s infinite linear alternate-reverse;
-      }
-
-      .title::after {
-        left: 2px;
-        text-shadow: -1px 0 var(--mctf-cyan);
-        animation: glitch-anim-1 2s infinite linear alternate-reverse;
-      }
-
-      .cursor {
+      .game-cursor {
         display: inline-block;
-        width: 0.6em;
-        height: 1em;
-        margin-left: 0.2em;
-        vertical-align: text-bottom;
-        background: var(--mctf-cyan);
+        width: 0.55em;
+        height: 0.9em;
+        margin-left: 0.18em;
+        vertical-align: -0.08em;
+        background: var(--cyan);
         animation: blink 1s step-end infinite;
       }
 
-      .sub {
-        margin-bottom: 1rem;
-        color: var(--mctf-cyan);
+      .signup > .shell > p {
+        margin: 16px auto 24px;
+        color: var(--muted);
       }
 
-      .subscribe-form {
-        display: grid;
-        grid-template-columns: 1fr auto;
-        gap: 0.6rem;
-      }
-
-      .subscribe-form input {
-        min-width: 80px;
+      .signup-frame {
+        width: min(100%, 620px);
+        height: 87px;
+        border: 0;
         background: transparent;
-        border: 1px solid var(--mctf-cyan);
-        border-radius: 4px;
-        color: var(--mctf-cyan-light);
-        padding: 10px;
-        font-size: 14px;
-        font-family: "Source Code Pro", Courier, monospace;
       }
 
-      .subscribe-form button {
-        border: 1px solid var(--mctf-yellow);
-        background: transparent;
-        color: var(--mctf-yellow);
-        border-radius: 4px;
-        padding: 10px 16px;
-        text-transform: uppercase;
-        letter-spacing: 0.08em;
-        font-weight: 700;
-        cursor: pointer;
-        font-family: "Source Code Pro", Courier, monospace;
+      .site-footer {
+        border-top: 1px solid var(--line);
+        padding: 26px 0;
       }
 
-      .subscribe-form button:hover {
-        background: var(--mctf-yellow);
-        color: var(--mctf-bg);
+      .footer-inner {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 24px;
+      }
+
+      .footer-inner p {
+        color: var(--muted);
+        font-size: 0.72rem;
       }
 
       .social-links {
-        margin-top: 0.9rem;
         display: flex;
-        flex-wrap: wrap;
-        gap: 0.6rem;
+        gap: 10px;
       }
 
       .social-link {
         display: inline-flex;
         align-items: center;
-        gap: 0.45rem;
-        padding: 8px 12px;
-        border: 1px solid var(--mctf-cyan);
-        border-radius: 4px;
-        color: var(--mctf-cyan-light);
+        gap: 7px;
+        color: var(--cyan-light);
         text-decoration: none;
+        font-size: 0.72rem;
         text-transform: uppercase;
-        letter-spacing: 0.05em;
-        font-size: 0.82rem;
       }
 
       .social-link svg {
-        width: 14px;
-        height: 14px;
+        width: 15px;
+        height: 15px;
         fill: currentColor;
       }
 
-      .social-link:hover {
-        border-color: var(--mctf-yellow);
-        color: var(--mctf-yellow);
+      .social-link:hover,
+      .social-link:focus-visible {
+        color: var(--yellow);
       }
 
-      @media (max-width: 640px) {
-        .subscribe-form {
-          grid-template-columns: 1fr;
+      @keyframes pulse {
+        0%,
+        100% {
+          opacity: 0.28;
+          transform: scale(0.75);
+        }
+        50% {
+          opacity: 0.95;
+          transform: scale(1.25);
         }
       }
 
@@ -270,124 +607,304 @@
         }
       }
 
-      @keyframes glitch-anim-1 {
-        0% {
-          clip: rect(49px, 820px, 79px, 0);
-        }
-        20% {
-          clip: rect(8px, 820px, 20px, 0);
-        }
-        40% {
-          clip: rect(79px, 820px, 53px, 0);
-        }
-        60% {
-          clip: rect(2px, 820px, 109px, 0);
-        }
-        80% {
-          clip: rect(100px, 820px, 113px, 0);
-        }
-        100% {
-          clip: rect(33px, 820px, 6px, 0);
-        }
-      }
-
-      @keyframes glitch-anim-2 {
-        0% {
-          clip: rect(93px, 820px, 108px, 0);
-        }
-        20% {
-          clip: rect(11px, 820px, 110px, 0);
-        }
-        40% {
-          clip: rect(79px, 820px, 2px, 0);
-        }
-        60% {
-          clip: rect(52px, 820px, 15px, 0);
-        }
-        80% {
-          clip: rect(36px, 820px, 42px, 0);
-        }
-        100% {
-          clip: rect(57px, 820px, 84px, 0);
-        }
-      }
-
-      @keyframes pulse-red {
+      @keyframes game-glitch {
         0%,
+        91%,
+        97%,
         100% {
-          opacity: 0.25;
-          transform: scale(0.7);
+          text-shadow: none;
+          transform: translateX(0);
         }
-        50% {
-          opacity: 0.85;
-          transform: scale(1.25);
+        92%,
+        95% {
+          text-shadow: -3px 0 var(--red), 3px 0 var(--cyan);
+          transform: translateX(-1px);
+        }
+        93%,
+        96% {
+          text-shadow: 3px 0 var(--red), -3px 0 var(--cyan);
+          transform: translateX(1px);
+        }
+      }
+
+      @media (max-width: 900px) {
+        .hero,
+        .platform-grid,
+        .lineage {
+          grid-template-columns: 1fr;
+        }
+
+        .hero {
+          min-height: auto;
+          padding: 72px 0;
+        }
+
+        h1 {
+          font-size: 4rem;
+        }
+
+        .section-heading h2,
+        .lineage h2 {
+          font-size: 2.8rem;
+        }
+
+        .platform-copy h2,
+        .signup h2 {
+          font-size: 2.6rem;
+        }
+
+        .feature-grid {
+          grid-template-columns: 1fr;
+        }
+
+        .platform-copy {
+          max-width: 680px;
+        }
+      }
+
+      @media (max-width: 640px) {
+        .shell {
+          width: min(100% - 28px, var(--max-width));
+        }
+
+        .main-nav a:not(:last-child) {
+          display: none;
+        }
+
+        .hero {
+          gap: 24px;
+          padding: 36px 0 24px;
+        }
+
+        h1 {
+          font-size: 2.4rem;
+        }
+
+        .hero-copy {
+          margin-top: 16px;
+          font-size: 0.92rem;
+          line-height: 1.5;
+        }
+
+        .actions {
+          margin-top: 22px;
+        }
+
+        .section {
+          padding: 72px 0;
+        }
+
+        .section-heading h2,
+        .lineage h2,
+        .platform-copy h2,
+        .signup h2 {
+          font-size: 2rem;
+        }
+
+        .map-readout {
+          display: none;
+        }
+
+        .signal-grid {
+          grid-template-columns: 1fr;
+        }
+
+        .map-readout div + div,
+        .signal-grid div + div {
+          border-top: 1px solid var(--line);
+          border-left: 0;
+        }
+
+        .flow li {
+          grid-template-columns: 1fr;
+          gap: 6px;
+        }
+
+        .footer-inner {
+          align-items: flex-start;
+          flex-direction: column;
+        }
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        html {
+          scroll-behavior: auto;
+        }
+
+        .map-dot,
+        .game-prompt,
+        .game-cursor {
+          animation: none;
         }
       }
     </style>
   </head>
   <body>
-    <main class="panel">
-      <div class="world-map-wrap" aria-hidden="true">
-        <div class="map-dots" id="mapDots"></div>
+    <header class="site-header">
+      <div class="shell header-inner">
+        <a class="brand" href="#top"><span>&gt;_</span> MapCTF</a>
+        <nav class="main-nav" aria-label="Main navigation">
+          <a href="#why">Why CTFs</a>
+          <a href="#platform">Platform</a>
+          <a href="#updates">Get updates</a>
+        </nav>
+      </div>
+    </header>
+
+    <main id="top">
+      <section class="shell hero">
+        <div>
+          <p class="eyebrow">From the creators of FBCTF</p>
+          <h1>Learn security on the <span>map.</span></h1>
+          <p class="hero-copy">
+            Cybersecurity is learned by doing. <strong>MapCTF</strong> turns capture the flag into a live,
+            visual campaign where teams explore, solve, capture, and adapt.
+          </p>
+          <div class="actions">
+            <a class="button" href="#updates">Get launch updates</a>
+            <a class="button secondary" href="https://github.com/jmpsec/mapctf" target="_blank" rel="noopener noreferrer">View on GitHub</a>
+          </div>
+        </div>
+
+        <div class="map-console" aria-label="MapCTF live campaign interface preview">
+          <div class="console-bar">
+            <span>Campaign / Global</span>
+            <span class="live">Live exercise</span>
+          </div>
+          <div class="world-map-wrap" aria-hidden="true">
+            <div class="map-dots" id="mapDots"></div>
+          </div>
+          <div class="map-readout">
+            <div><span>Active teams</span><strong>24 connected</strong></div>
+            <div><span>Objectives</span><strong>18 in play</strong></div>
+            <div><span>Latest capture</span><strong>Node 07 / 00:41</strong></div>
+          </div>
+        </div>
+      </section>
+
+      <div class="signal-strip" aria-label="Platform highlights">
+        <div class="shell signal-grid">
+          <div><strong>CTF-first</strong><span>Practice through real decisions</span></div>
+          <div><strong>Map-driven</strong><span>See the campaign evolve</span></div>
+          <div><strong>Team-ready</strong><span>Built for shared operations</span></div>
+        </div>
       </div>
 
-      <h1 class="title" data-text="SHALL WE PLAY A GAME?">
-        SHALL WE PLAY A GAME?
-        <span class="cursor"></span>
-      </h1>
-      <p class="sub">Subscribe to the MapCTF mailing list for launch updates.</p>
+      <section class="section" id="why">
+        <div class="shell">
+          <div class="section-heading">
+            <p class="eyebrow">Why capture the flag matters</p>
+            <h2>Knowledge becomes capability under pressure.</h2>
+            <p>CTF games create a safe place to investigate unfamiliar systems, test ideas, fail quickly, and turn technical knowledge into practical instinct.</p>
+          </div>
+          <div class="feature-grid">
+            <article class="feature">
+              <span class="feature-number">01 / Practice</span>
+              <h3>Build real problem-solving reflexes</h3>
+              <p>Players move beyond passive lessons and use tools, evidence, and judgment to reach an objective.</p>
+            </article>
+            <article class="feature">
+              <span class="feature-number">02 / Collaborate</span>
+              <h3>Learn how teams actually operate</h3>
+              <p>Shared targets encourage communication, specialization, and fast handoffs across different skill levels.</p>
+            </article>
+            <article class="feature">
+              <span class="feature-number">03 / Measure</span>
+              <h3>Make progress visible</h3>
+              <p>Captures and completed paths reveal where a team is strong, where it stalls, and what to train next.</p>
+            </article>
+          </div>
+        </div>
+      </section>
 
-      <!-- Google tag (gtag.js) -->
-      <script async src="https://www.googletagmanager.com/gtag/js?id=G-89CZP77XLW"></script>
-      <script>
-        window.dataLayer = window.dataLayer || [];
-        function gtag() {
-          dataLayer.push(arguments);
-        }
-        gtag("js", new Date());
+      <section class="section section-alt" id="platform">
+        <div class="shell platform-grid">
+          <div class="platform-copy">
+            <p class="eyebrow">A different CTF interface</p>
+            <h2>The game board is the mission.</h2>
+            <p>MapCTF replaces a flat challenge list with a spatial, interactive view of the exercise. Teams can understand the field, follow their progress, and see each capture change the campaign.</p>
+            <ul class="platform-list">
+              <li><strong>Explore the scenario</strong><span>Navigate targets and challenge paths through a map built around the exercise.</span></li>
+              <li><strong>Track live state</strong><span>Watch objectives, ownership, and team progress update as the game unfolds.</span></li>
+              <li><strong>Operate as a team</strong><span>Keep the shared mission visible while players work on different parts of the problem.</span></li>
+            </ul>
+          </div>
 
-        gtag("config", "G-89CZP77XLW");
-      </script>
-      <!-- Beehiiv embed -->
-      <script async src="https://subscribe-forms.beehiiv.com/embed.js"></script>
-      <iframe src="https://subscribe-forms.beehiiv.com/cbe18fa2-3de0-45c3-9b62-aed015d85399" class="beehiiv-embed" data-test-id="beehiiv-embed" frameborder="0" scrolling="no" style="width: 100%; height: 87px; margin: 0; border-radius: 0px 0px 0px 0px !important; background-color: transparent; box-shadow: 0 0 #0000; max-width: 100%"></iframe>
+          <div class="technical-view" aria-label="MapCTF platform flow">
+            <header>Platform flow / campaign runtime</header>
+            <ol class="flow">
+              <li><code>01 scenario</code><span>An organizer defines the map, objectives, dependencies, and scoring model.</span></li>
+              <li><code>02 teams</code><span>Players enter the same campaign and coordinate against a shared live state.</span></li>
+              <li><code>03 challenges</code><span>Web, reverse engineering, forensics, crypto, and infrastructure tasks become map objectives.</span></li>
+              <li><code>04 captures</code><span>Validated flags change progress, unlock routes, and update the operational picture.</span></li>
+              <li><code>05 signal</code><span>Organizers see outcomes they can use for debriefs, training, and future scenarios.</span></li>
+            </ol>
+          </div>
+        </div>
+      </section>
 
-      <nav class="social-links" aria-label="Social links">
-        <a class="social-link" href="https://github.com/jmpsec/mapctf" target="_blank" rel="noopener noreferrer">
-          <svg viewBox="0 0 24 24" aria-hidden="true">
-            <path d="M12 .5A12 12 0 0 0 8.2 23.9c.6.1.8-.3.8-.6v-2.2c-3.3.7-4-1.4-4-1.4-.6-1.3-1.3-1.7-1.3-1.7-1.1-.7.1-.7.1-.7 1.2.1 1.9 1.2 1.9 1.2 1.1 1.9 2.9 1.3 3.6 1 .1-.8.4-1.3.7-1.6-2.7-.3-5.5-1.4-5.5-6A4.7 4.7 0 0 1 6.7 8c-.1-.3-.5-1.5.1-3.1 0 0 1-.3 3.2 1.2a11 11 0 0 1 5.9 0c2.2-1.5 3.2-1.2 3.2-1.2.6 1.6.2 2.8.1 3.1a4.7 4.7 0 0 1 1.2 3.3c0 4.6-2.8 5.6-5.5 6 .4.4.8 1.1.8 2.2v3.2c0 .3.2.7.8.6A12 12 0 0 0 12 .5Z" />
-          </svg>
-          GitHub
-        </a>
-        <a class="social-link" href="https://t.me/mapctf" target="_blank" rel="noopener noreferrer">
-          <svg viewBox="0 0 24 24" aria-hidden="true">
-            <path d="M23.2 4.4c.3-1.4-1-2.5-2.2-1.9L2.4 9.7c-1.4.5-1.3 2.6.1 3l4.8 1.5 1.8 5.6c.4 1.3 2 1.8 3.1.9l2.7-2.2 4.8 3.6c1.1.8 2.6.2 2.8-1.1l.7-4.6 1.1-12Z" />
-          </svg>
-          Telegram
-        </a>
-        <a class="social-link" href="https://discord.gg/mapctf" target="_blank" rel="noopener noreferrer">
-          <svg viewBox="0 0 24 24" aria-hidden="true">
-            <path d="M20.3 4.4a19 19 0 0 0-4.7-1.5l-.2.4-.7 1.5a17.3 17.3 0 0 0-5.4 0l-.7-1.5-.2-.4a19 19 0 0 0-4.7 1.5C1 8.3.4 12 .7 15.7a19.3 19.3 0 0 0 5.7 2.9l1.2-1.9a12.4 12.4 0 0 1-1.9-.9l.5-.4c3.7 1.7 7.8 1.7 11.4 0l.5.4c-.6.4-1.3.7-1.9.9l1.2 1.9a19.3 19.3 0 0 0 5.7-2.9c.5-4.3-.7-8-2.8-11.3ZM9.5 13.7c-1.1 0-1.9-1-1.9-2.2s.8-2.2 1.9-2.2 1.9 1 1.9 2.2-.8 2.2-1.9 2.2Zm5 0c-1.1 0-1.9-1-1.9-2.2s.8-2.2 1.9-2.2 1.9 1 1.9 2.2-.8 2.2-1.9 2.2Z" />
-          </svg>
-          Discord
-        </a>
-      </nav>
+      <section class="section">
+        <div class="shell lineage">
+          <div>
+            <p class="eyebrow">Proven CTF lineage</p>
+            <h2>Created by the same team behind FBCTF.</h2>
+          </div>
+          <div class="lineage-copy">
+            <p><strong>FBCTF helped teams run approachable, open capture the flag events.</strong> MapCTF carries that experience forward with a new visual model for cyber ranges, classrooms, companies, and communities.</p>
+            <a class="button secondary" href="https://github.com/facebookarchive/fbctf" target="_blank" rel="noopener noreferrer">Explore FBCTF</a>
+          </div>
+        </div>
+      </section>
+
+      <section class="signup" id="updates">
+        <div class="shell">
+          <p class="eyebrow">Join the operation</p>
+          <h2 class="game-prompt">
+            Shall we play a game?<span class="game-cursor" aria-hidden="true"></span>
+          </h2>
+          <p>Get platform progress, launch updates, and early access news.</p>
+          <script async src="https://subscribe-forms.beehiiv.com/embed.js"></script>
+          <iframe
+            class="beehiiv-embed signup-frame"
+            src="https://subscribe-forms.beehiiv.com/cbe18fa2-3de0-45c3-9b62-aed015d85399"
+            data-test-id="beehiiv-embed"
+            title="Subscribe to MapCTF updates"
+            scrolling="no"
+          ></iframe>
+        </div>
+      </section>
     </main>
-    <!-- Map dot animation script -->
+
+    <footer class="site-footer">
+      <div class="shell footer-inner">
+        <p>MapCTF / Learn. Capture. Advance. / A <a href="https://jmpsec.com" target="_blank" rel="noopener noreferrer">JMP SEC</a> project</p>
+        <nav class="social-links" aria-label="Social links">
+          <a class="social-link" href="https://github.com/jmpsec/mapctf" target="_blank" rel="noopener noreferrer">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 .5A12 12 0 0 0 8.2 23.9c.6.1.8-.3.8-.6v-2.2c-3.3.7-4-1.4-4-1.4-.6-1.3-1.3-1.7-1.3-1.7-1.1-.7.1-.7.1-.7 1.2.1 1.9 1.2 1.9 1.2 1.1 1.9 2.9 1.3 3.6 1 .1-.8.4-1.3.7-1.6-2.7-.3-5.5-1.4-5.5-6A4.7 4.7 0 0 1 6.7 8c-.1-.3-.5-1.5.1-3.1 0 0 1-.3 3.2 1.2a11 11 0 0 1 5.9 0c2.2-1.5 3.2-1.2 3.2-1.2.6 1.6.2 2.8.1 3.1a4.7 4.7 0 0 1 1.2 3.3c0 4.6-2.8 5.6-5.5 6 .4.4.8 1.1.8 2.2v3.2c0 .3.2.7.8.6A12 12 0 0 0 12 .5Z" /></svg>
+            GitHub
+          </a>
+          <a class="social-link" href="https://t.me/mapctf" target="_blank" rel="noopener noreferrer">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M23.2 4.4c.3-1.4-1-2.5-2.2-1.9L2.4 9.7c-1.4.5-1.3 2.6.1 3l4.8 1.5 1.8 5.6c.4 1.3 2 1.8 3.1.9l2.7-2.2 4.8 3.6c1.1.8 2.6.2 2.8-1.1l.7-4.6 1.1-12Z" /></svg>
+            Telegram
+          </a>
+        </nav>
+      </div>
+    </footer>
+
     <script>
       const mapDots = document.getElementById("mapDots");
-      const dotCount = 16;
+      const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
       function randomRange(min, max) {
         return Math.random() * (max - min) + min;
       }
 
       function placeDot(dot) {
-        dot.style.left = `${randomRange(0, 100)}%`;
-        dot.style.top = `${randomRange(0, 100)}%`;
+        dot.style.left = `${randomRange(4, 96)}%`;
+        dot.style.top = `${randomRange(8, 92)}%`;
       }
 
-      function spawnDot() {
+      for (let index = 0; index < 18; index += 1) {
         const dot = document.createElement("span");
         dot.className = "map-dot";
         dot.style.animationDelay = `${Math.random() * 4}s`;
@@ -395,15 +912,13 @@
         placeDot(dot);
         mapDots.appendChild(dot);
 
-        const moveDot = () => {
-          placeDot(dot);
-          setTimeout(moveDot, randomRange(3200, 6400));
-        };
-        setTimeout(moveDot, randomRange(3200, 6400));
-      }
-
-      for (let i = 0; i < dotCount; i += 1) {
-        spawnDot();
+        if (!reduceMotion) {
+          const moveDot = () => {
+            placeDot(dot);
+            window.setTimeout(moveDot, randomRange(3200, 6400));
+          };
+          window.setTimeout(moveDot, randomRange(3200, 6400));
+        }
       }
     </script>
   </body>
