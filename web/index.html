@@ -100,6 +100,9 @@
       }
 
       .brand {
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
         color: var(--cyan-light);
         text-decoration: none;
         font-size: 1.05rem;
@@ -107,8 +110,9 @@
         text-transform: uppercase;
       }
 
-      .brand span {
-        color: var(--cyan);
+      .brand-mark {
+        width: 28px;
+        height: 28px;
       }
 
       .main-nav {
@@ -742,7 +746,7 @@
   <body>
     <header class="site-header">
       <div class="shell header-inner">
-        <a class="brand" href="#top"><span>&gt;_</span> MapCTF</a>
+        <a class="brand" href="#top"><img class="brand-mark" src="/img/android-chrome-192x192.png" alt="" /> MapCTF</a>
         <nav class="main-nav" aria-label="Main navigation">
           <a href="#why">Why CTFs</a>
           <a href="#platform">Platform</a>
