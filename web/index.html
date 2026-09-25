@@ -136,9 +136,9 @@
       .hero {
         min-height: 72svh;
         display: grid;
-        grid-template-columns: minmax(0, 0.9fr) minmax(460px, 1.1fr);
+        grid-template-columns: minmax(0, 0.78fr) minmax(520px, 1.22fr);
         align-items: center;
-        gap: clamp(40px, 7vw, 88px);
+        gap: clamp(32px, 4vw, 56px);
         padding: 52px 0;
       }
 
@@ -265,36 +265,6 @@
 
       .world-map-wrap img {
         object-fit: cover;
-      }
-
-      .map-readout {
-        display: grid;
-        grid-template-columns: repeat(3, 1fr);
-        border-top: 1px solid var(--line);
-      }
-
-      .map-readout div {
-        min-width: 0;
-        padding: 14px;
-      }
-
-      .map-readout div + div {
-        border-left: 1px solid var(--line);
-      }
-
-      .map-readout span {
-        display: block;
-        overflow-wrap: anywhere;
-        color: var(--muted);
-        font-size: 0.62rem;
-        text-transform: uppercase;
-      }
-
-      .map-readout strong {
-        display: block;
-        margin-top: 2px;
-        color: var(--cyan-light);
-        font-size: 0.84rem;
       }
 
       .signal-strip {
@@ -666,15 +636,10 @@
           font-size: 2rem;
         }
 
-        .map-readout {
-          display: none;
-        }
-
         .signal-grid {
           grid-template-columns: 1fr;
         }
 
-        .map-readout div + div,
         .signal-grid div + div {
           border-top: 1px solid var(--line);
           border-left: 0;
@@ -733,7 +698,7 @@
         <div class="map-console" aria-label="MapCTF live campaign interface preview">
           <div class="console-bar">
             <span>Campaign / Global</span>
-            <span class="live">Live exercise</span>
+            <span class="live">MapCTF interface</span>
           </div>
           <div class="world-map-wrap">
             <picture>
@@ -743,11 +708,6 @@
                 alt="MapCTF gameboard showing Spain, the United States, Russia, and Australia activating before their challenge panels open"
               />
             </picture>
-          </div>
-          <div class="map-readout">
-            <div><span>Active teams</span><strong>24 connected</strong></div>
-            <div><span>Objectives</span><strong>18 in play</strong></div>
-            <div><span>Latest capture</span><strong>Node 07 / 00:41</strong></div>
           </div>
         </div>
       </section>
