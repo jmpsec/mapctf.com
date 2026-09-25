@@ -256,42 +256,15 @@
         isolation: isolate;
       }
 
-      .world-map-wrap::before {
-        position: absolute;
-        inset: 0;
-        z-index: 1;
-        background: url("/img/bg--world.png") center no-repeat;
-        background-size: 92% auto;
-        content: "";
-        filter: brightness(1.35) contrast(1.12);
+      .world-map-wrap picture,
+      .world-map-wrap img {
+        display: block;
+        width: 100%;
+        height: 100%;
       }
 
-      .world-map-wrap::after {
-        position: absolute;
-        inset: 0;
-        z-index: 2;
-        background-image: linear-gradient(rgba(40, 196, 201, 0.1) 1px, transparent 1px), linear-gradient(90deg, rgba(40, 196, 201, 0.1) 1px, transparent 1px);
-        background-size: 24px 24px;
-        content: "";
-      }
-
-      .map-dots {
-        position: absolute;
-        inset: 0;
-        z-index: 3;
-        pointer-events: none;
-        -webkit-mask: url("/img/bg--world.png") center / 92% auto no-repeat;
-        mask: url("/img/bg--world.png") center / 92% auto no-repeat;
-      }
-
-      .map-dot {
-        position: absolute;
-        width: 9px;
-        height: 9px;
-        background: var(--red);
-        clip-path: polygon(50% 0, 0 100%, 100% 100%);
-        filter: drop-shadow(0 0 5px var(--red));
-        animation: pulse 3.8s ease-in-out infinite;
+      .world-map-wrap img {
+        object-fit: cover;
       }
 
       .map-readout {
@@ -593,18 +566,6 @@
         color: var(--yellow);
       }
 
-      @keyframes pulse {
-        0%,
-        100% {
-          opacity: 0.28;
-          transform: scale(0.75);
-        }
-        50% {
-          opacity: 0.95;
-          transform: scale(1.25);
-        }
-      }
-
       @keyframes blink {
         50% {
           opacity: 0;
@@ -735,7 +696,6 @@
           scroll-behavior: auto;
         }
 
-        .map-dot,
         .game-prompt,
         .game-cursor {
           animation: none;
@@ -775,8 +735,14 @@
             <span>Campaign / Global</span>
             <span class="live">Live exercise</span>
           </div>
-          <div class="world-map-wrap" aria-hidden="true">
-            <div class="map-dots" id="mapDots"></div>
+          <div class="world-map-wrap">
+            <picture>
+              <source media="(prefers-reduced-motion: reduce)" srcset="/img/mapctf-gameboard-poster.png" />
+              <img
+                src="/img/mapctf-gameboard.gif"
+                alt="MapCTF gameboard showing Spain, the United States, Russia, and Australia activating before their challenge panels open"
+              />
+            </picture>
           </div>
           <div class="map-readout">
             <div><span>Active teams</span><strong>24 connected</strong></div>
@@ -895,35 +861,5 @@
       </div>
     </footer>
 
-    <script>
-      const mapDots = document.getElementById("mapDots");
-      const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-
-      function randomRange(min, max) {
-        return Math.random() * (max - min) + min;
-      }
-
-      function placeDot(dot) {
-        dot.style.left = `${randomRange(4, 96)}%`;
-        dot.style.top = `${randomRange(8, 92)}%`;
-      }
-
-      for (let index = 0; index < 18; index += 1) {
-        const dot = document.createElement("span");
-        dot.className = "map-dot";
-        dot.style.animationDelay = `${Math.random() * 4}s`;
-        dot.style.animationDuration = `${randomRange(3.2, 5.4)}s`;
-        placeDot(dot);
-        mapDots.appendChild(dot);
-
-        if (!reduceMotion) {
-          const moveDot = () => {
-            placeDot(dot);
-            window.setTimeout(moveDot, randomRange(3200, 6400));
-          };
-          window.setTimeout(moveDot, randomRange(3200, 6400));
-        }
-      }
-    </script>
   </body>
 </html>

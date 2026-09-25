@@ -8,6 +8,9 @@
 # IDE metadata
 .vscode
 .idea
+*.md
+!README.md
 
 # SaaS
 saas
+
