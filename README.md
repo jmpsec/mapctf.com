@@ -1,13 +1,17 @@
 # mapctf.com
 
 <p align="center">
-  <img alt="MapCTF" src="mapctf.png" />
+  <img alt="MapCTF" src="mapctf.png" width="180" />
   <p align="center">
     Cyber range platform with a map-based UI
   </p>
 </p>
 
 Static site for [mapctf.com](https://mapctf.com)
+
+<p align="center">
+  <img alt="MapCTF gameboard interface" src="web/img/mapctf-gameboard.gif" width="720" />
+</p>
 
 ## Serve Locally
 

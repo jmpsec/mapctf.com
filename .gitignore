@@ -8,6 +8,10 @@
 # IDE metadata
 .vscode
 .idea
+.claude
+.codex
+
+# Markdown files
 *.md
 !README.md
 

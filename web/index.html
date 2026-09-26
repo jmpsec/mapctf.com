@@ -6,7 +6,7 @@
     <meta name="description" content="MapCTF turns cybersecurity training into an interactive, map-based capture the flag experience from the creators of FBCTF." />
     <meta name="keywords" content="MapCTF, CTF, cybersecurity, capture the flag, hacking competition, security training, cyber range, FBCTF" />
     <meta name="robots" content="index, follow" />
-    <meta name="theme-color" content="#071317" />
+    <meta name="theme-color" content="#111e23" />
     <link rel="canonical" href="https://mapctf.com/" />
 
     <meta property="og:type" content="website" />
@@ -14,19 +14,24 @@
     <meta property="og:description" content="An interactive, map-based CTF platform from the creators of FBCTF." />
     <meta property="og:url" content="https://mapctf.com/" />
     <meta property="og:site_name" content="MapCTF" />
-    <meta property="og:image" content="https://mapctf.com/img/android-chrome-512x512.png" />
-    <meta property="og:image:alt" content="MapCTF logo" />
+    <meta property="og:image" content="https://mapctf.com/img/mapctf-og.png" />
+    <meta property="og:image:type" content="image/png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="MapCTF interactive gameboard interface" />
 
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content="MapCTF | Cybersecurity is learned by doing" />
     <meta name="twitter:description" content="An interactive, map-based CTF platform from the creators of FBCTF." />
-    <meta name="twitter:image" content="https://mapctf.com/img/android-chrome-512x512.png" />
+    <meta name="twitter:image" content="https://mapctf.com/img/mapctf-og.png" />
+    <meta name="twitter:image:alt" content="MapCTF interactive gameboard interface" />
 
     <title>MapCTF | Cybersecurity is learned by doing</title>
-    <link rel="icon" href="/img/favicon.ico" />
-    <link rel="apple-touch-icon" sizes="180x180" href="/img/apple-touch-icon.png" />
+    <link rel="icon" href="/img/favicon.ico" sizes="48x48" />
+    <link rel="icon" type="image/svg+xml" href="/img/favicon.svg" />
     <link rel="icon" type="image/png" sizes="32x32" href="/img/favicon-32x32.png" />
     <link rel="icon" type="image/png" sizes="16x16" href="/img/favicon-16x16.png" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/img/apple-touch-icon.png" />
     <link rel="manifest" href="/site.webmanifest" />
 
     <!-- Google tag (gtag.js) -->
@@ -40,19 +45,30 @@
       gtag("config", "G-89CZP77XLW");
     </script>
 
-    <style>
-      @import url("https://fonts.googleapis.com/css?family=Source+Code+Pro:300,400,600,700");
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@500;600;700&family=Source+Code+Pro:wght@400;500;600;700&display=swap" rel="stylesheet" />
 
+    <style>
+      /* Palette matches the logo and the gameboard (mapctf backend mapctf.css). */
       :root {
-        --bg: #071317;
-        --surface: #0d2026;
-        --line: #24505a;
-        --cyan: #28c4c9;
-        --cyan-light: #d9fcfd;
+        --bg: #0b1519;
+        --navy-deep: #111e23;
+        --navy: #13242b;
+        --panel: #1f3b47;
+        --line: #234650;
+        --line-soft: #1a333b;
+        --teal: #21b4ba;
+        --cyan: #5cf0f6;
+        --pale: #cff8fa;
         --yellow: #ead44d;
-        --red: #ff4b4b;
-        --muted: #8bb2b8;
+        --red: #ff4d4d;
+        --text: #b7d3d7;
+        --muted: #7fa3a9;
+        --display: "Chakra Petch", "Source Code Pro", monospace;
+        --mono: "Source Code Pro", ui-monospace, Menlo, monospace;
         --max-width: 1180px;
+        --cut: 12px;
       }
 
       * {
@@ -63,18 +79,45 @@
 
       html {
         scroll-behavior: smooth;
+        scroll-padding-top: 72px;
       }
 
       body {
         min-width: 320px;
-        font-family: "Source Code Pro", Courier, monospace;
-        color: var(--cyan-light);
+        font-family: var(--mono);
+        color: var(--text);
         background: var(--bg);
-        line-height: 1.65;
+        line-height: 1.7;
+        -webkit-font-smoothing: antialiased;
+      }
+
+      /* Faint HUD grid behind everything. */
+      body::before {
+        position: fixed;
+        inset: 0;
+        z-index: -1;
+        background-image:
+          linear-gradient(rgba(33, 180, 186, 0.045) 1px, transparent 1px),
+          linear-gradient(90deg, rgba(33, 180, 186, 0.045) 1px, transparent 1px);
+        background-size: 48px 48px;
+        mask-image: radial-gradient(ellipse at 50% 0%, #000 0%, transparent 75%);
+        content: "";
+        pointer-events: none;
+      }
+
+      ::selection {
+        color: var(--navy-deep);
+        background: var(--cyan);
       }
 
       a {
         color: inherit;
+      }
+
+      a:focus-visible,
+      .button:focus-visible {
+        outline: 2px solid var(--cyan);
+        outline-offset: 3px;
       }
 
       .shell {
@@ -82,17 +125,49 @@
         margin: 0 auto;
       }
 
+      h1,
+      h2,
+      h3 {
+        color: var(--pale);
+        font-family: var(--display);
+        font-weight: 700;
+        line-height: 1.08;
+        letter-spacing: -0.01em;
+      }
+
+      .eyebrow {
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        margin-bottom: 18px;
+        color: var(--yellow);
+        font-size: 0.72rem;
+        font-weight: 600;
+        letter-spacing: 0.16em;
+        text-transform: uppercase;
+      }
+
+      .eyebrow::before {
+        width: 0;
+        height: 0;
+        border-right: 5px solid transparent;
+        border-bottom: 9px solid currentColor;
+        border-left: 5px solid transparent;
+        content: "";
+      }
+
+      /* Header */
       .site-header {
         position: sticky;
         top: 0;
         z-index: 20;
-        border-bottom: 1px solid var(--line);
-        background: rgba(7, 19, 23, 0.94);
-        backdrop-filter: blur(12px);
+        border-bottom: 1px solid var(--line-soft);
+        background: rgba(11, 21, 25, 0.8);
+        backdrop-filter: blur(14px);
       }
 
       .header-inner {
-        min-height: 64px;
+        min-height: 68px;
         display: flex;
         align-items: center;
         justify-content: space-between;
@@ -102,123 +177,184 @@
       .brand {
         display: inline-flex;
         align-items: center;
-        gap: 10px;
-        color: var(--cyan-light);
+        gap: 12px;
+        color: var(--pale);
         text-decoration: none;
-        font-size: 1.05rem;
+        font-family: var(--display);
+        font-size: 1.2rem;
         font-weight: 700;
+        letter-spacing: 0.06em;
         text-transform: uppercase;
       }
 
-      .brand-mark {
-        width: 28px;
-        height: 28px;
+      .brand img {
+        width: 34px;
+        height: 34px;
+        transition: transform 0.4s ease;
+      }
+
+      .brand:hover img {
+        transform: rotate(-12deg);
+      }
+
+      .brand b {
+        color: var(--teal);
+        font-weight: inherit;
       }
 
       .main-nav {
         display: flex;
         align-items: center;
-        gap: 24px;
+        gap: 28px;
       }
 
       .main-nav a {
         color: var(--muted);
         text-decoration: none;
-        font-size: 0.78rem;
+        font-size: 0.74rem;
+        letter-spacing: 0.12em;
         text-transform: uppercase;
+        transition: color 0.2s;
       }
 
       .main-nav a:hover,
       .main-nav a:focus-visible {
-        color: var(--yellow);
+        color: var(--cyan);
       }
 
-      .hero {
-        min-height: 72svh;
-        display: grid;
-        grid-template-columns: minmax(0, 0.78fr) minmax(520px, 1.22fr);
+      .main-nav .button {
+        min-height: 38px;
+        padding: 8px 16px;
+        color: var(--navy-deep);
+      }
+
+      /* Buttons: clipped HUD corners */
+      .button {
+        min-height: 46px;
+        display: inline-flex;
         align-items: center;
-        gap: clamp(32px, 4vw, 56px);
-        padding: 52px 0;
-      }
-
-      .eyebrow {
-        margin-bottom: 16px;
-        color: var(--yellow);
-        font-size: 0.75rem;
+        justify-content: center;
+        gap: 10px;
+        border: 0;
+        padding: 12px 22px;
+        color: var(--navy-deep);
+        background: var(--yellow);
+        clip-path: polygon(var(--cut) 0, 100% 0, 100% calc(100% - var(--cut)), calc(100% - var(--cut)) 100%, 0 100%, 0 var(--cut));
+        text-decoration: none;
+        font-family: var(--display);
+        font-size: 0.82rem;
         font-weight: 700;
+        letter-spacing: 0.1em;
         text-transform: uppercase;
+        transition: background 0.2s, color 0.2s, transform 0.2s;
       }
 
-      h1,
-      h2,
-      h3 {
-        line-height: 1.15;
+      .button:hover {
+        background: #f5e27a;
+        transform: translateY(-2px);
+      }
+
+      .button.secondary {
+        color: var(--pale);
+        background: rgba(33, 180, 186, 0.1);
+        box-shadow: inset 0 0 0 1px var(--teal);
+      }
+
+      .button.secondary:hover {
+        color: var(--navy-deep);
+        background: var(--cyan);
+      }
+
+      .button svg {
+        width: 16px;
+        height: 16px;
+        fill: currentColor;
+      }
+
+      /* Hero */
+      .hero {
+        position: relative;
+        min-height: calc(100svh - 68px - 86px);
+        display: grid;
+        grid-template-columns: minmax(0, 0.8fr) minmax(520px, 1.2fr);
+        align-items: center;
+        gap: clamp(32px, 5vw, 64px);
+        padding: 64px 0;
+      }
+
+      .hero::before {
+        position: absolute;
+        top: 50%;
+        right: -10%;
+        z-index: -1;
+        width: 70%;
+        aspect-ratio: 1;
+        background: radial-gradient(circle, rgba(33, 180, 186, 0.16), transparent 62%);
+        transform: translateY(-50%);
+        content: "";
       }
 
       h1 {
-        max-width: 720px;
-        font-size: 4.4rem;
-        font-weight: 700;
+        font-size: clamp(2.6rem, 5.6vw, 4.9rem);
         text-transform: uppercase;
       }
 
       h1 span {
         color: var(--cyan);
+        text-shadow: 0 0 28px rgba(92, 240, 246, 0.45);
       }
 
       .hero-copy {
-        max-width: 630px;
-        margin-top: 24px;
-        color: #bad4d8;
-        font-size: 1.08rem;
+        max-width: 560px;
+        margin-top: 26px;
+        font-size: 1.04rem;
       }
 
       .hero-copy strong,
       .lineage-copy strong {
-        color: var(--cyan-light);
+        color: var(--pale);
       }
 
       .actions {
         display: flex;
         flex-wrap: wrap;
-        gap: 12px;
-        margin-top: 32px;
+        gap: 14px;
+        margin-top: 36px;
       }
 
-      .button {
-        min-height: 44px;
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        border: 1px solid var(--yellow);
-        border-radius: 4px;
-        padding: 10px 18px;
-        color: var(--bg);
-        background: var(--yellow);
-        text-decoration: none;
-        font-size: 0.78rem;
-        font-weight: 700;
-        text-transform: uppercase;
+      /* HUD frame with corner brackets, reused by panels */
+      .hud {
+        position: relative;
+        border: 1px solid var(--line);
+        background: linear-gradient(180deg, rgba(31, 59, 71, 0.45), rgba(17, 30, 35, 0.9));
       }
 
-      .button.secondary {
-        border-color: var(--cyan);
-        color: var(--cyan-light);
-        background: transparent;
+      .hud::before,
+      .hud::after {
+        position: absolute;
+        width: 16px;
+        height: 16px;
+        border: 2px solid var(--teal);
+        content: "";
+        pointer-events: none;
       }
 
-      .button:hover,
-      .button:focus-visible {
-        filter: brightness(1.12);
+      .hud::before {
+        top: -1px;
+        left: -1px;
+        border-right: 0;
+        border-bottom: 0;
+      }
+
+      .hud::after {
+        right: -1px;
+        bottom: -1px;
+        border-top: 0;
+        border-left: 0;
       }
 
       .map-console {
-        border: 1px solid var(--cyan);
-        border-radius: 6px;
-        overflow: hidden;
-        background: var(--surface);
-        box-shadow: 0 0 36px rgba(40, 196, 201, 0.16);
+        box-shadow: 0 30px 80px -30px rgba(0, 0, 0, 0.8), 0 0 60px -10px rgba(33, 180, 186, 0.25);
       }
 
       .console-bar {
@@ -227,17 +363,18 @@
         align-items: center;
         justify-content: space-between;
         border-bottom: 1px solid var(--line);
-        padding: 0 14px;
+        padding: 0 16px;
         color: var(--muted);
-        font-size: 0.68rem;
+        font-size: 0.66rem;
+        letter-spacing: 0.14em;
         text-transform: uppercase;
       }
 
       .live {
         display: inline-flex;
         align-items: center;
-        gap: 7px;
-        color: var(--cyan-light);
+        gap: 8px;
+        color: var(--pale);
       }
 
       .live::before {
@@ -245,32 +382,29 @@
         height: 7px;
         border-radius: 50%;
         background: var(--red);
+        box-shadow: 0 0 0 0 rgba(255, 77, 77, 0.7);
         content: "";
-        box-shadow: 0 0 8px var(--red);
+        animation: pulse 1.8s infinite;
       }
 
       .world-map-wrap {
         position: relative;
         aspect-ratio: 16 / 9;
         overflow: hidden;
-        isolation: isolate;
       }
 
-      .world-map-wrap picture,
       .world-map-wrap img {
         display: block;
         width: 100%;
         height: 100%;
-      }
-
-      .world-map-wrap img {
         object-fit: cover;
       }
 
+      /* Signal strip */
       .signal-strip {
-        border-top: 1px solid var(--line);
-        border-bottom: 1px solid var(--line);
-        background: #09191e;
+        border-top: 1px solid var(--line-soft);
+        border-bottom: 1px solid var(--line-soft);
+        background: rgba(17, 30, 35, 0.85);
       }
 
       .signal-grid {
@@ -279,80 +413,110 @@
       }
 
       .signal-grid div {
-        padding: 22px 28px;
-        text-align: center;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 14px;
+        padding: 26px 24px;
       }
 
       .signal-grid div + div {
-        border-left: 1px solid var(--line);
+        border-left: 1px solid var(--line-soft);
+      }
+
+      .signal-grid svg {
+        flex: none;
+        width: 22px;
+        height: 22px;
       }
 
       .signal-grid strong {
         display: block;
-        color: var(--yellow);
-        font-size: 0.78rem;
+        color: var(--pale);
+        font-family: var(--display);
+        font-size: 0.9rem;
+        letter-spacing: 0.08em;
+        line-height: 1.3;
         text-transform: uppercase;
       }
 
       .signal-grid span {
         color: var(--muted);
-        font-size: 0.72rem;
+        font-size: 0.74rem;
       }
 
+      /* Sections */
       .section {
-        padding: 104px 0;
+        padding: 120px 0;
       }
 
       .section-alt {
-        border-top: 1px solid var(--line);
-        border-bottom: 1px solid var(--line);
-        background: var(--surface);
+        border-top: 1px solid var(--line-soft);
+        border-bottom: 1px solid var(--line-soft);
+        background: rgba(17, 30, 35, 0.7);
       }
 
       .section-heading {
-        max-width: 790px;
-        margin-bottom: 48px;
+        max-width: 780px;
+        margin-bottom: 56px;
       }
 
-      .section-heading h2 {
-        max-width: 760px;
-        font-size: 3.2rem;
+      .section-heading h2,
+      .platform-copy h2,
+      .lineage h2 {
+        font-size: clamp(2rem, 4vw, 3.2rem);
       }
 
       .section-heading p:last-child {
-        max-width: 680px;
-        margin-top: 18px;
+        max-width: 640px;
+        margin-top: 20px;
         color: var(--muted);
       }
 
       .feature-grid {
         display: grid;
         grid-template-columns: repeat(3, 1fr);
-        gap: 16px;
+        gap: 20px;
       }
 
       .feature {
-        border: 1px solid var(--line);
-        border-radius: 6px;
-        padding: 28px;
-        background: #09191e;
+        padding: 32px 30px 34px;
+        transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+      }
+
+      .feature:hover {
+        border-color: var(--teal);
+        box-shadow: 0 0 40px -12px rgba(33, 180, 186, 0.5);
+        transform: translateY(-4px);
+      }
+
+      .feature-head {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 34px;
       }
 
       .feature-number {
-        display: block;
-        margin-bottom: 28px;
-        color: var(--cyan);
-        font-size: 0.72rem;
+        color: var(--teal);
+        font-size: 0.7rem;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+      }
+
+      .feature-head svg {
+        width: 26px;
+        height: 26px;
       }
 
       .feature h3 {
         margin-bottom: 12px;
-        font-size: 1.1rem;
+        font-size: 1.3rem;
       }
 
       .feature p {
         color: var(--muted);
-        font-size: 0.9rem;
+        font-size: 0.88rem;
       }
 
       .platform-grid {
@@ -363,8 +527,7 @@
       }
 
       .platform-copy h2 {
-        margin-bottom: 20px;
-        font-size: 3rem;
+        margin-bottom: 22px;
       }
 
       .platform-copy > p,
@@ -373,20 +536,33 @@
       }
 
       .platform-list {
-        margin-top: 32px;
+        margin-top: 36px;
         list-style: none;
       }
 
       .platform-list li {
-        border-top: 1px solid var(--line);
-        padding: 18px 0;
+        position: relative;
+        border-top: 1px solid var(--line-soft);
+        padding: 20px 0 20px 30px;
+      }
+
+      .platform-list li::before {
+        position: absolute;
+        top: 27px;
+        left: 2px;
+        width: 10px;
+        height: 10px;
+        border: 2px solid var(--teal);
+        transform: rotate(45deg);
+        content: "";
       }
 
       .platform-list strong {
         display: block;
-        margin-bottom: 5px;
-        color: var(--cyan-light);
-        font-size: 0.92rem;
+        margin-bottom: 4px;
+        color: var(--pale);
+        font-family: var(--display);
+        font-size: 1.05rem;
       }
 
       .platform-list span {
@@ -394,74 +570,104 @@
         font-size: 0.84rem;
       }
 
-      .technical-view {
-        border: 1px solid var(--line);
-        border-radius: 6px;
-        overflow: hidden;
-        background: #071317;
-      }
-
       .technical-view header {
+        display: flex;
+        justify-content: space-between;
         border-bottom: 1px solid var(--line);
-        padding: 14px 18px;
+        padding: 14px 20px;
         color: var(--muted);
-        font-size: 0.7rem;
+        font-size: 0.68rem;
+        letter-spacing: 0.14em;
         text-transform: uppercase;
       }
 
+      .technical-view header span:last-child {
+        color: var(--teal);
+      }
+
       .flow {
+        position: relative;
         list-style: none;
-        padding: 12px 22px 22px;
+        padding: 10px 24px 18px;
       }
 
       .flow li {
         display: grid;
-        grid-template-columns: 110px 1fr;
-        gap: 18px;
-        border-bottom: 1px solid #18363e;
-        padding: 18px 0;
+        grid-template-columns: 120px 1fr;
+        gap: 20px;
+        border-bottom: 1px dashed var(--line-soft);
+        padding: 20px 0;
+        transition: background 0.2s;
       }
 
       .flow li:last-child {
         border-bottom: 0;
       }
 
+      .flow li:hover code {
+        color: var(--cyan);
+      }
+
       .flow code {
         color: var(--yellow);
         font-family: inherit;
         font-size: 0.74rem;
+        font-weight: 600;
+        letter-spacing: 0.06em;
+        text-transform: uppercase;
+        transition: color 0.2s;
+      }
+
+      .flow code::before {
+        color: var(--teal);
+        content: "> ";
       }
 
       .flow span {
-        color: #b4cdd1;
-        font-size: 0.82rem;
+        font-size: 0.84rem;
       }
 
       .lineage {
         display: grid;
-        grid-template-columns: minmax(0, 1fr) minmax(280px, 0.65fr);
+        grid-template-columns: minmax(0, 1fr) minmax(280px, 0.7fr);
         align-items: center;
-        gap: 56px;
+        gap: 64px;
       }
 
-      .lineage h2 {
-        max-width: 700px;
-        font-size: 3.2rem;
+      .lineage-copy {
+        border-left: 2px solid var(--teal);
+        padding-left: 32px;
       }
 
       .lineage-copy p {
-        margin-bottom: 18px;
+        margin-bottom: 24px;
       }
 
+      /* Signup */
       .signup {
-        border-top: 1px solid var(--line);
-        padding: 88px 0;
+        position: relative;
+        overflow: hidden;
+        border-top: 1px solid var(--line-soft);
+        padding: 100px 0 110px;
         text-align: center;
-        background: #09191e;
+        background: radial-gradient(ellipse at 50% 40%, rgba(33, 180, 186, 0.14), transparent 60%), var(--navy-deep);
+      }
+
+      .signup-logo {
+        display: block;
+        width: 200px;
+        height: 200px;
+        margin: 0 auto 28px;
+        animation: float 7s ease-in-out infinite;
+      }
+
+      .signup .eyebrow {
+        display: flex;
+        justify-content: center;
       }
 
       .signup h2 {
-        font-size: 3rem;
+        font-size: clamp(2rem, 4.4vw, 3.2rem);
       }
 
       .game-prompt {
@@ -473,16 +679,17 @@
 
       .game-cursor {
         display: inline-block;
-        width: 0.55em;
-        height: 0.9em;
+        width: 0.5em;
+        height: 0.85em;
         margin-left: 0.18em;
-        vertical-align: -0.08em;
+        vertical-align: -0.06em;
         background: var(--cyan);
+        box-shadow: 0 0 14px var(--cyan);
         animation: blink 1s step-end infinite;
       }
 
       .signup > .shell > p {
-        margin: 16px auto 24px;
+        margin: 18px auto 28px;
         color: var(--muted);
       }
 
@@ -493,9 +700,11 @@
         background: transparent;
       }
 
+      /* Footer */
       .site-footer {
-        border-top: 1px solid var(--line);
-        padding: 26px 0;
+        border-top: 1px solid var(--line-soft);
+        padding: 30px 0;
+        background: var(--bg);
       }
 
       .footer-inner {
@@ -505,40 +714,74 @@
         gap: 24px;
       }
 
+      .footer-brand {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+      }
+
+      .footer-brand img {
+        width: 26px;
+        height: 26px;
+      }
+
       .footer-inner p {
         color: var(--muted);
         font-size: 0.72rem;
       }
 
+      .footer-inner p a {
+        color: var(--pale);
+        text-decoration-color: var(--teal);
+        text-underline-offset: 3px;
+      }
+
       .social-links {
         display: flex;
-        gap: 10px;
+        gap: 22px;
       }
 
       .social-link {
         display: inline-flex;
         align-items: center;
-        gap: 7px;
-        color: var(--cyan-light);
+        gap: 8px;
+        color: var(--text);
         text-decoration: none;
         font-size: 0.72rem;
+        letter-spacing: 0.1em;
         text-transform: uppercase;
+        transition: color 0.2s;
       }
 
       .social-link svg {
-        width: 15px;
-        height: 15px;
+        width: 16px;
+        height: 16px;
         fill: currentColor;
       }
 
       .social-link:hover,
       .social-link:focus-visible {
-        color: var(--yellow);
+        color: var(--cyan);
       }
 
       @keyframes blink {
         50% {
           opacity: 0;
+        }
+      }
+
+      @keyframes pulse {
+        70% {
+          box-shadow: 0 0 0 8px rgba(255, 77, 77, 0);
+        }
+        100% {
+          box-shadow: 0 0 0 0 rgba(255, 77, 77, 0);
+        }
+      }
+
+      @keyframes float {
+        50% {
+          transform: translateY(-10px);
         }
       }
 
@@ -562,7 +805,7 @@
         }
       }
 
-      @media (max-width: 900px) {
+      @media (max-width: 960px) {
         .hero,
         .platform-grid,
         .lineage {
@@ -571,21 +814,12 @@
 
         .hero {
           min-height: auto;
-          padding: 72px 0;
+          padding: 64px 0;
         }
 
-        h1 {
-          font-size: 4rem;
-        }
-
-        .section-heading h2,
-        .lineage h2 {
-          font-size: 2.8rem;
-        }
-
-        .platform-copy h2,
-        .signup h2 {
-          font-size: 2.6rem;
+        .hero::before {
+          right: 0;
+          width: 100%;
         }
 
         .feature-grid {
@@ -599,55 +833,74 @@
 
       @media (max-width: 640px) {
         .shell {
-          width: min(100% - 28px, var(--max-width));
+          width: calc(100% - 32px);
         }
 
-        .main-nav a:not(:last-child) {
+        .main-nav a:not(.button) {
           display: none;
         }
 
-        .hero {
-          gap: 24px;
-          padding: 36px 0 24px;
+        .brand img {
+          width: 30px;
+          height: 30px;
         }
 
-        h1 {
-          font-size: 2.4rem;
+        .hero {
+          gap: 32px;
+          padding: 40px 0 32px;
         }
 
         .hero-copy {
-          margin-top: 16px;
-          font-size: 0.92rem;
-          line-height: 1.5;
+          margin-top: 18px;
+          font-size: 0.94rem;
         }
 
         .actions {
-          margin-top: 22px;
+          margin-top: 26px;
+        }
+
+        .actions .button {
+          flex: 1 1 100%;
         }
 
         .section {
-          padding: 72px 0;
-        }
-
-        .section-heading h2,
-        .lineage h2,
-        .platform-copy h2,
-        .signup h2 {
-          font-size: 2rem;
+          padding: 80px 0;
         }
 
         .signal-grid {
           grid-template-columns: 1fr;
         }
 
+        .signal-grid div {
+          justify-content: flex-start;
+          padding: 18px 4px;
+        }
+
         .signal-grid div + div {
-          border-top: 1px solid var(--line);
+          border-top: 1px solid var(--line-soft);
           border-left: 0;
+        }
+
+        .flow {
+          padding: 6px 18px 12px;
         }
 
         .flow li {
           grid-template-columns: 1fr;
           gap: 6px;
+        }
+
+        .lineage {
+          gap: 32px;
+        }
+
+        .lineage-copy {
+          padding-left: 20px;
+        }
+
+        .signup-logo {
+          width: 150px;
+          height: 150px;
         }
 
         .footer-inner {
@@ -661,9 +914,11 @@
           scroll-behavior: auto;
         }
 
-        .game-prompt,
-        .game-cursor {
-          animation: none;
+        *,
+        *::before,
+        *::after {
+          animation: none !important;
+          transition: none !important;
         }
       }
     </style>
@@ -671,11 +926,12 @@
   <body>
     <header class="site-header">
       <div class="shell header-inner">
-        <a class="brand" href="#top"><img class="brand-mark" src="/img/android-chrome-192x192.png" alt="" /> MapCTF</a>
+        <a class="brand" href="#top"><img src="/img/favicon.svg" alt="" /> <span>Map<b>CTF</b></span></a>
         <nav class="main-nav" aria-label="Main navigation">
           <a href="#why">Why CTFs</a>
           <a href="#platform">Platform</a>
-          <a href="#updates">Get updates</a>
+          <a href="https://github.com/jmpsec/mapctf" target="_blank" rel="noopener noreferrer">GitHub</a>
+          <a class="button" href="#updates">Get updates</a>
         </nav>
       </div>
     </header>
@@ -691,14 +947,17 @@
           </p>
           <div class="actions">
             <a class="button" href="#updates">Get launch updates</a>
-            <a class="button secondary" href="https://github.com/jmpsec/mapctf" target="_blank" rel="noopener noreferrer">View on GitHub</a>
+            <a class="button secondary" href="https://github.com/jmpsec/mapctf" target="_blank" rel="noopener noreferrer">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 .5A12 12 0 0 0 8.2 23.9c.6.1.8-.3.8-.6v-2.2c-3.3.7-4-1.4-4-1.4-.6-1.3-1.3-1.7-1.3-1.7-1.1-.7.1-.7.1-.7 1.2.1 1.9 1.2 1.9 1.2 1.1 1.9 2.9 1.3 3.6 1 .1-.8.4-1.3.7-1.6-2.7-.3-5.5-1.4-5.5-6A4.7 4.7 0 0 1 6.7 8c-.1-.3-.5-1.5.1-3.1 0 0 1-.3 3.2 1.2a11 11 0 0 1 5.9 0c2.2-1.5 3.2-1.2 3.2-1.2.6 1.6.2 2.8.1 3.1a4.7 4.7 0 0 1 1.2 3.3c0 4.6-2.8 5.6-5.5 6 .4.4.8 1.1.8 2.2v3.2c0 .3.2.7.8.6A12 12 0 0 0 12 .5Z" /></svg>
+              View on GitHub
+            </a>
           </div>
         </div>
 
-        <div class="map-console" aria-label="MapCTF live campaign interface preview">
+        <div class="hud map-console" aria-label="MapCTF live campaign interface preview">
           <div class="console-bar">
             <span>Campaign / Global</span>
-            <span class="live">MapCTF interface</span>
+            <span class="live">Live gameboard</span>
           </div>
           <div class="world-map-wrap">
             <picture>
@@ -714,9 +973,18 @@
 
       <div class="signal-strip" aria-label="Platform highlights">
         <div class="shell signal-grid">
-          <div><strong>CTF-first</strong><span>Practice through real decisions</span></div>
-          <div><strong>Map-driven</strong><span>See the campaign evolve</span></div>
-          <div><strong>Team-ready</strong><span>Built for shared operations</span></div>
+          <div>
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3 22 20H2Z" fill="none" stroke="#ead44d" stroke-width="2" stroke-linejoin="round" /></svg>
+            <p><strong>CTF-first</strong><span>Practice through real decisions</span></p>
+          </div>
+          <div>
+            <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9.5" fill="none" stroke="#21b4ba" stroke-width="2" /><ellipse cx="12" cy="12" rx="4" ry="9.5" fill="none" stroke="#21b4ba" stroke-width="1.5" /><path d="M2.5 12h19" stroke="#21b4ba" stroke-width="1.5" /></svg>
+            <p><strong>Map-driven</strong><span>See the campaign evolve</span></p>
+          </div>
+          <div>
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 4 13 15H1Z M17 9l6 11H11Z" fill="none" stroke="#ff4d4d" stroke-width="2" stroke-linejoin="round" /></svg>
+            <p><strong>Team-ready</strong><span>Built for shared operations</span></p>
+          </div>
         </div>
       </div>
 
@@ -728,18 +996,27 @@
             <p>CTF games create a safe place to investigate unfamiliar systems, test ideas, fail quickly, and turn technical knowledge into practical instinct.</p>
           </div>
           <div class="feature-grid">
-            <article class="feature">
-              <span class="feature-number">01 / Practice</span>
+            <article class="hud feature">
+              <div class="feature-head">
+                <span class="feature-number">01 / Practice</span>
+                <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9" fill="none" stroke="#21b4ba" stroke-width="1.8" /><circle cx="12" cy="12" r="4" fill="none" stroke="#21b4ba" stroke-width="1.8" /><circle cx="12" cy="12" r="1.3" fill="#ead44d" /></svg>
+              </div>
               <h3>Build real problem-solving reflexes</h3>
               <p>Players move beyond passive lessons and use tools, evidence, and judgment to reach an objective.</p>
             </article>
-            <article class="feature">
-              <span class="feature-number">02 / Collaborate</span>
+            <article class="hud feature">
+              <div class="feature-head">
+                <span class="feature-number">02 / Collaborate</span>
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 18Q10 2 20 8" fill="none" stroke="#ead44d" stroke-width="1.8" stroke-linecap="round" /><path d="M16 13l4-6.5 4 6.5Z" transform="translate(-4 -2)" fill="#ff4d4d" /><path d="M0 22l4-7 4 7Z" fill="#21b4ba" /></svg>
+              </div>
               <h3>Learn how teams actually operate</h3>
               <p>Shared targets encourage communication, specialization, and fast handoffs across different skill levels.</p>
             </article>
-            <article class="feature">
-              <span class="feature-number">03 / Measure</span>
+            <article class="hud feature">
+              <div class="feature-head">
+                <span class="feature-number">03 / Measure</span>
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 21V11M9 21V5M15 21v-7M21 21V8" stroke="#21b4ba" stroke-width="2.4" stroke-linecap="round" /><circle cx="21" cy="4" r="1.6" fill="#ead44d" /></svg>
+              </div>
               <h3>Make progress visible</h3>
               <p>Captures and completed paths reveal where a team is strong, where it stalls, and what to train next.</p>
             </article>
@@ -760,8 +1037,8 @@
             </ul>
           </div>
 
-          <div class="technical-view" aria-label="MapCTF platform flow">
-            <header>Platform flow / campaign runtime</header>
+          <div class="hud technical-view" aria-label="MapCTF platform flow">
+            <header><span>Platform flow / campaign runtime</span><span>5 stages</span></header>
             <ol class="flow">
               <li><code>01 scenario</code><span>An organizer defines the map, objectives, dependencies, and scoring model.</span></li>
               <li><code>02 teams</code><span>Players enter the same campaign and coordinate against a shared live state.</span></li>
@@ -788,6 +1065,7 @@
 
       <section class="signup" id="updates">
         <div class="shell">
+          <img class="signup-logo" src="/img/mapctf-logo.svg" alt="" loading="lazy" />
           <p class="eyebrow">Join the operation</p>
           <h2 class="game-prompt">
             Shall we play a game?<span class="game-cursor" aria-hidden="true"></span>
@@ -807,7 +1085,10 @@
 
     <footer class="site-footer">
       <div class="shell footer-inner">
-        <p>MapCTF / Learn. Capture. Advance. / A <a href="https://jmpsec.com" target="_blank" rel="noopener noreferrer">JMP SEC</a> project</p>
+        <div class="footer-brand">
+          <img src="/img/favicon.svg" alt="" />
+          <p>MapCTF / Learn. Capture. Advance. / A <a href="https://jmpsec.com" target="_blank" rel="noopener noreferrer">JMP SEC</a> project</p>
+        </div>
         <nav class="social-links" aria-label="Social links">
           <a class="social-link" href="https://github.com/jmpsec/mapctf" target="_blank" rel="noopener noreferrer">
             <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 .5A12 12 0 0 0 8.2 23.9c.6.1.8-.3.8-.6v-2.2c-3.3.7-4-1.4-4-1.4-.6-1.3-1.3-1.7-1.3-1.7-1.1-.7.1-.7.1-.7 1.2.1 1.9 1.2 1.9 1.2 1.1 1.9 2.9 1.3 3.6 1 .1-.8.4-1.3.7-1.6-2.7-.3-5.5-1.4-5.5-6A4.7 4.7 0 0 1 6.7 8c-.1-.3-.5-1.5.1-3.1 0 0 1-.3 3.2 1.2a11 11 0 0 1 5.9 0c2.2-1.5 3.2-1.2 3.2-1.2.6 1.6.2 2.8.1 3.1a4.7 4.7 0 0 1 1.2 3.3c0 4.6-2.8 5.6-5.5 6 .4.4.8 1.1.8 2.2v3.2c0 .3.2.7.8.6A12 12 0 0 0 12 .5Z" /></svg>
@@ -820,6 +1101,5 @@
         </nav>
       </div>
     </footer>
-
   </body>
 </html>

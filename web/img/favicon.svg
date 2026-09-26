@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64">
+<defs>
+  <radialGradient id="o" cx="40%" cy="34%" r="72%">
+    <stop offset="0" stop-color="#1f3b47"/><stop offset="0.7" stop-color="#13242b"/><stop offset="1" stop-color="#111e23"/>
+  </radialGradient>
+  <clipPath id="d"><circle cx="32.0" cy="32.0" r="28.0"/></clipPath>
+</defs>
+<circle cx="32.0" cy="32.0" r="28.0" fill="url(#o)"/>
+<g fill="none" stroke="#21b4ba" stroke-width="1.6" stroke-opacity="0.55" clip-path="url(#d)">
+  <ellipse cx="32.0" cy="32.0" rx="11.76" ry="28.00"/>
+  <ellipse cx="32.0" cy="32.0" rx="22.96" ry="28.00"/>
+  <line x1="32.0" y1="4.0" x2="32.0" y2="60.0"/>
+  <line x1="4.0" y1="32.0" x2="60.0" y2="32.0"/>
+  <ellipse cx="32.0" cy="17.439999999999998" rx="28.00" ry="10.08"/>
+  <ellipse cx="32.0" cy="46.56" rx="28.00" ry="10.08"/>
+</g>
+<circle cx="32.0" cy="32.0" r="28.0" fill="none" stroke="#21b4ba" stroke-width="3"/>
+<path d="M21.0,33.5 Q29.8,8.5 44.5,18.5" fill="none" stroke="#ead44d" stroke-width="3" stroke-linecap="round"/>
+<polygon points="37.50,25.89 44.50,12.73 51.50,25.89" fill="#ff4d4d" stroke="#111e23" stroke-width="1" stroke-linejoin="round"/>
+<polygon points="12.50,41.83 21.00,25.85 29.50,41.83" fill="#ead44d" stroke="#111e23" stroke-width="1" stroke-linejoin="round"/>
+</svg>
